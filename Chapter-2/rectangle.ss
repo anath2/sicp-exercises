@@ -15,20 +15,6 @@
 
 (define end-segment cdr)
 
-;; Calculate the midpoint of a line
-
-(define (mid-point-segment l)
-  (make-point
-   (/
-    (+
-     (x-cord (start-segment l))
-     (x-cord (end-segment l)))
-    2.0)
-   (/
-    (+
-     (y-cord (start-segment l))
-     (y-cord (end-segment l)))
-    2.0))):w
-
 ;; Create a rectangle
 
+;; TODO
