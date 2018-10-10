@@ -17,4 +17,4 @@
 
 ;; Create a rectangle
 
-;; TODO
+
