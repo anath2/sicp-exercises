@@ -51,5 +51,19 @@
     (- (lower-bound x) (lower-bound y))
     (- (upper-bound x) (upper-bound y))))
 
+;; Define an alternative representation of interval
+;; that uses center and tolerance (in percentage)
+
+(define (make-center-percentage c p)
+  (make-interval (- c (* c (/ p 100.0))) (+ c (* c (/ p 100.0)))))
+
+;; Center 
+
+(define center car)
+
+;; Perentage 
+
+(define percent cdr)
+
 
 
