@@ -1,3 +1,5 @@
+#lang racket/base
+
 ;; Define an interval constructor and define various operations on it
 ;; Including : 
 ;;    - Addition
@@ -37,12 +39,17 @@
 ;; Division
 
 (define (divide-interval x y)
-  (multiply-interval x (make-interval (/ 1.0 (upper-bound y))
-				      (/ 1.0 (lower-bound y)))))
+  (if (= (lower-bound y) (upper-bound y))
+      (error "Lower bound interval empty")
+      (multiply-interval x (make-interval (/ 1.0 (upper-bound y))
+				          (/ 1.0 (lower-bound y))))))
 
 ;; Substraction
 
-(define (susbstract-interval x y)
-  (add interval x (- y))
+(define (sub-interval x y)
+  (make-interval
+    (- (lower-bound x) (lower-bound y))
+    (- (upper-bound x) (upper-bound y))))
+
 
 
