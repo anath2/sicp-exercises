@@ -65,5 +65,16 @@
 
 (define percent cdr)
 
+;; Approximate tolerance for product of two interval
+;; c-1 * p-2 + c-2 * p-2 + p-2 * p-1
+;; since the percentages are small, the result p-1 * p-2 is 
+;; negligible
 
+(define (product-tolerance i-1 i-2)
+  (+ (* (center i-1) (percent i-2))
+     (* (center i-2) (percent i-1))))
 
+;; The formula for parallel resistors can be written in 
+;; two ways
+
+;; To be continued ...
