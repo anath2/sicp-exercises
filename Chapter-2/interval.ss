@@ -77,4 +77,20 @@
 ;; The formula for parallel resistors can be written in 
 ;; two ways
 
-;; To be continued ...
+;; One
+
+(define (par r1 r2) 
+  (div-interval (multiply-interval r1 r2)
+		(add-interval r1 r2)))
+
+;; Two
+
+(define (par r1 r2)
+  (let one (make-interval 1 1))
+  (divide-interval one 
+		(add-interval 
+		  (divide-interval one r1)
+		  (divide-interval one r2))))
+
+	
+
