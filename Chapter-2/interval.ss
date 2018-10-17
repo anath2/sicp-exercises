@@ -92,5 +92,6 @@
 		  (divide-interval one r1)
 		  (divide-interval one r2))))
 
-	
+
+;; To be continued .. 
 
