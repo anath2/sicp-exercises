@@ -13,11 +13,11 @@
 ;; sublists
 
 (define (deep-reverse-list l)
-  (if (null? l) l
-      (cons (deep-reverse-list (cdr l))
-	    (if (not (pair? (car l)))
-		(car l)
-		(deep-reverse-list (car l))))))
+  (cond ((null? l) '())
+	((not (pair? l)) l)
+	(else (cons (deep-reverse-list (cdr l))
+		    (deep-reverse-list (car l))))))
+
 
 
 
