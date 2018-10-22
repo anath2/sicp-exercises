@@ -6,7 +6,6 @@
 ;; and all the subsets of elements except the first element plus the first elemnt
 
 
-
 (define (subsets s)
   (if (null? s)
       (list '())
