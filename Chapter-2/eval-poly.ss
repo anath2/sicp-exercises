@@ -4,11 +4,15 @@
 
 (define (accumulate op initial sequence)
   (if (null? sequence)
-      '()
-      (op initial (accumulate op initial (cdr sequence)))))
+      initial
+      (op (car sequence) 
+	  (accumulate op initial (cdr sequence)))))
 
+;; Horner polynomial evaluation
 
 (define (horner-eval x cofficient-sequence)
-  (accumulate (lambda (this-coeff higher-terms) (..))
+  (accumulate (lambda (this-coeff higher-terms)  (+  this-coeff  (* higher-terms x))
 	      0
 	      cofficient-sequence))
+
+
