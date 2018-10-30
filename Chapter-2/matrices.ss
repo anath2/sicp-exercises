@@ -32,7 +32,7 @@
 ;; Matrix vector production
 
 (define (matrix-vector-product m v)
-  (map (dot-product v) m))
+  (map (lambda (row) (dot-product row v)) m))
 
 ;; Transpose a matrix
 
@@ -43,4 +43,4 @@
 
 (define (matrix-multiply m n)
   (let ((cols (transpose n)))
-    (map () m)))
+    (map (lambda (m-row) (matrix-vector-product cols m-row)) m)))
