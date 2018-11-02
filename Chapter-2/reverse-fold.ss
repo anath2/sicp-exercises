@@ -18,5 +18,22 @@
 	      (cdr rest))))
   (iter initial sequence))
 
+;; Reverse using foldr
 
+(define (reverse-foldr sequence)
+  (define nil '())
+  (foldr (lambda (elem already-reversed)
+	   (append already-reversed (list elem)))
+	 nil sequence))
+
+;; Reverse using foldl
+
+(define (reverse-foldl sequence)
+  (define nil '())
+  (foldl (lambda (result first) (cons first result))
+	 nil sequence))
+
+
+
+	   	
 
