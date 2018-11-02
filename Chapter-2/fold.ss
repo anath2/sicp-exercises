@@ -23,13 +23,13 @@
 
 ;; Operations
 
-(fold-right / 1 (list 1 2 3)) ;; 3 / 2
+(foldr / 1 (list 1 2 3)) ;; 3 / 2
 
-(fold-left / 1 (list 1 2 3)) ;; 1 / 3
+(foldl / 1 (list 1 2 3)) ;; 1 / 6
 
-(fold-right list '() (list 1 2 3)) ;; (list 1 2 3 '())
+(foldr list '() (list 1 2 3)) ;; (list 1 2 3 '())
 
-(fold-left list '() (list 1 2 3)) ;; (list (list (list '() 1) 2) 3)
+(foldl list '() (list 1 2 3)) ;; (list (list (list '() 1) 2) 3)
 
 ;; Operation must be commutative to fold left and fold right must be same      
 
