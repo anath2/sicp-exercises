@@ -3,13 +3,31 @@
 
 ;; Enumerate a range of integers
 
-(define (enumerate n)
+(define (enumerate start end)
+  (if (> start end)
+      '()
+      (cons start (enumerate (+ start 1) end))))
+
+;; Accumulate
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence) (accumulate op initial (cdr sequence)))))
+
+;; flatmap is a combination of accumulate and map
+;; Accumulate is applied to the result of map 
+
+(define (flatmap proc sequence)
   (define nil '())
-  (define (inner a b)
-    (if (b < a)
-	nil
-	(cons (a (inner (+ a 1) b)))))
-  (inner 1 n))
+  (accumulate append nil (map proc sequence)))
 
+;; Create a unique set of pairs (i, j) 
+;; in the range 1 to n such that the following 
+;; condition holds true: 1 <= j < i <= n
 
+(define (unique-pairs n)
+  (flatmap (lambda (i) 
+	   (map (lambda (j) (list j i)) (enumerate 1 (- i 1))))
+	   (enumerate 1 n)))
 
