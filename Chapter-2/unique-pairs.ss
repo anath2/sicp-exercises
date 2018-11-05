@@ -8,14 +8,12 @@
       '()
       (cons start (enumerate (+ start 1) end))))
 
-
 ;; Accumulate
 
 (define (accumulate op initial sequence)
   (if (null? sequence)
       initial
       (op (car sequence) (accumulate op initial (cdr sequence)))))
-
 
 ;; flatmap is a combination of accumulate and map
 ;; Accumulate is applied to the result of map 
@@ -44,17 +42,20 @@
 	  (else (test (+ divisor 1)))))
   (test 2))
 
-
 ;; Check if sum of numbers is prime
 
 (define (prime-sum? pair)
   (prime? (+ (car pair) (cadr pair))))
 
+;; Append sum to a pair of numbers
+
+(define (append-sum pair)
+  (list (car pair) (cadr pair) (+ (car pair) (cadr pair))))
 
 ;; Unique pairs of numbers where the sum is prime
 
 (define (prime-pairs n)
-  (filter (lambda (i) (prime-sum? i)) (unique-pairs n)))
-
+  (map append-sum 
+       (filter (lambda (i) (prime-sum? i)) (unique-pairs n))))
 
 
