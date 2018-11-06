@@ -25,6 +25,7 @@
 
 ;; Unque triplets
 
-(define unique-triplets
-  (flatmap 
-    (lambda ()
+(define (unique-triplets n)	
+  (flatmap (lambda (i)())
+	   (enumerate 1 n)))
+
