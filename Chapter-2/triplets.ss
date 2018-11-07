@@ -8,6 +8,14 @@
 ;; such that each value is less than or equal to n and then
 ;; filtering the result such that the sum equals s
 
+;; Accumulate
+
+(define (accumulate op result sequence)
+  (if (null? sequence)
+      result
+      (op (car sequence) (accumulate op result (cdr sequence)))))
+
+
 ;; Enumerate 
 
 (define (enumerate n)
@@ -23,9 +31,30 @@
   (define nil '())	
   (accumulate append nil (map proc sequence)))
 
-;; Unque triplets
+;; Unique triplets
 
 (define (unique-triplets n)	
-  (flatmap (lambda (i)())
+  (flatmap (lambda (i)
+	     (flatmap (lambda (j) 
+			(map (lambda (k) (list i j k))
+			     (enumerate 1 (- 1 j))))
+		      (enumerate 1 (- 1 i))))
 	   (enumerate 1 n)))
+
+
+;; Filter
+
+(define (filter pred sequence)
+  (cond ((null? sequence) '())
+	((pred (car sequence)) 
+	       (cons (car sequence) (filter pred (cdr sequence))))
+	(else (filter pred (cdr sequence)))))
+
+
+;; Filter unique triples
+
+(define (filtered-triples s n)
+  (filter (lambda (i) (= s (accumulate + 0 i)))
+	  (unique-triples n)))
+
 
