@@ -33,7 +33,23 @@
 ;; Checks if a position is safe to place the queen or not
 ;; based on positions of other queens
 
-(define (safe? x filled-positions ()))
+(define (safe? positions)
+  (let ((trial (car positions))
+	(trial-row (caar positions))
+	(trial-column (cadar positions))
+	(rest (cdr positions)))
+    (accumulate (lambda (pos result)
+		  (let ((row (car pos))
+			(col (cadr pos)))
+		    (and (not (= 
+				(- trial-row trial-col)
+				(- row col)))
+			 (not (= (+ trial-row trial-col) 
+				 (+ row col)))
+			 (not (= trial-row row))
+			 result)))
+		true
+		rest)))
 
 ;; Adjoin position:
 ;; Combines the position with rest of the available 
@@ -47,11 +63,11 @@
   (define (queen-cols k)
     (if (= k 0) 
 	(list empty-board) 
-	(filter (lambda (position) (safe? k position))
+	(filter (lambda (positions) (safe? positions))
 		(flatmap 
 		  (lambda (rest-of-queens) 
 		    (map (lambda (new-row)
-			   (adjoin-position new-row k rest-of-queens))i
+			   (adjoin-position new-row k rest-of-queens))
 			 (enumerate-range 1 board-size)))
 		  (queens-cols (- k 1))))))
   (queen-cols board-size))
