@@ -55,7 +55,8 @@
 ;; Combines the position with rest of the available 
 ;; positions for the queen
 
-(define (adjoin-positions new-row n-cols occupied-queens ()))
+(define (adjoin-positions new-row new-col occupied-queens)
+  (append occupied-queens (list (list new-row new-col))))
 
 ;; Main
 
