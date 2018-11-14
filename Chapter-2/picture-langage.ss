@@ -20,5 +20,13 @@
       (let (smaller (right-split painter (- n 1)))
 	(besides (below smaller smaller)))))
 
-
-
+;;up-split: 
+;; Split the painter function recursively upwardsi
+(define (up-split painter n)
+  (if (= n 0)
+      painter
+      (let (smaller (up-split painter (- n 1)))
+	
+	)
+      )
+  )
