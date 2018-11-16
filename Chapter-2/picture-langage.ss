@@ -53,3 +53,15 @@
   (let ((quarter (corner-split painter n)))
     (let ((half (besides (flip-horiz quarter) quarter)))
       (below (flip-vert half) half))))
+
+
+;; square-of-four:
+;; Apply 4 transformations to elements and place them
+;; on the corners of a square
+
+(define (square-of-four tl tr bl br)
+  (lambda (painter)
+    (let ((top (besides (tl painter) (tr painter)))
+	  (bottom (besides (bl painter) (br painter))))
+      (below bottom top))))
+
