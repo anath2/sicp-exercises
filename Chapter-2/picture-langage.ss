@@ -45,3 +45,11 @@
 		(below bottom-right corner))))))
 
 
+;; square-limit:
+;; If we place corner functions and four corners of 
+;; a square, we obtain this pattern
+
+(define (square-limit painter n)
+  (let ((quarter (corner-split painter n)))
+    (let ((half (besides (flip-horiz quarter) quarter)))
+      (below (flip-vert half) half))))
