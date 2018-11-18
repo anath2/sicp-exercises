@@ -65,3 +65,22 @@
 	  (bottom (besides (bl painter) (br painter))))
       (below bottom top))))
 
+
+;; Define flipped-4:
+;; Define flipped four in terms of square-of-four function
+;; described above
+
+(define (flipped-pairs painter)
+ (let ((combine-4 (square-of-four identity flip-vert identity flip-vert)))
+   (combine-4 painter)))
+
+
+;;square-limit-2: 
+;; Define square limit in terms of square-of-four
+
+
+(define (square-limit-2 painter n)
+  (let ((combine-4 (square-of-four flip-horiz identity rotate-180 flip-vert)))
+    (combine-4 (corner-split painter n))))
+
+
