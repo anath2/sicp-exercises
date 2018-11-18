@@ -75,12 +75,33 @@
    (combine-4 painter)))
 
 
-;;square-limit-2: 
+;; square-limit-2: 
 ;; Define square limit in terms of square-of-four
-
 
 (define (square-limit-2 painter n)
   (let ((combine-4 (square-of-four flip-horiz identity rotate-180 flip-vert)))
     (combine-4 (corner-split painter n))))
 
 
+;; split:
+;; Define a general split procedure
+
+(define (split f1 f2)
+  (define (recursive painter n)
+    (if (= n 0)
+      painter
+      (let ((smaller (recursive painter (- n 1))))
+	(f1 painter (f2 smaller smaller)))))
+ (recursive-split))
+
+
+;; up-split-2:
+;; Up split in terms of above defined split
+
+(define up-split-2 (split below besides))
+
+
+;; right-split-2
+;; Right split in terms of split
+
+(define right-split-2 (split besides below))
