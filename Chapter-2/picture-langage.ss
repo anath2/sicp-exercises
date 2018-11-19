@@ -105,3 +105,111 @@
 ;; Right split in terms of split
 
 (define right-split-2 (split besides below))
+
+
+;; Vector: 
+;; A vector a represented in the 2d space (considered here)
+;; by x and y co-ordinates. The constructors and selectors 
+;; for which are described her
+
+;; Constructor
+
+(define (make-vect x-cor y-cord)
+  (cons x-cord y-cord))
+
+
+;; Selectors 
+
+;; x
+
+(define (xcor-vect vect)
+  (car vect))
+
+
+;; y 
+
+(define (ycor-vect)
+  (cadr vect))
+
+
+;; Procedures
+
+;; add-vect
+
+(define (add-vect v1 v2)
+  (make-vect 
+    (+ (xcor-vect v1)
+       (xcor-vect v2))
+    (+ (ycor-vect v1)
+       (ycor-vect v2))))
+
+
+;; sub-vect
+
+(define (sub-vect v1 v2)
+  (make-vect
+    (- (xcor-vect v1)
+       (xcor-vect v2))
+    (- (ycor-vect v1)
+       (ycor-vect v2))))
+
+
+;; scale-vect
+
+(define (scale-vect s v)
+  (make-vect 
+    (* s xcor-vect v)
+    (* s xcor-vect v)))
+
+
+;; frame: 
+;; A frame defines how images represented in a plane
+;; It consists of 3 selectors : 
+;; 1) origin-frame
+;; 2) edge-1-frame
+;; 3) edge-2-frame
+
+
+;; make-frame
+;; Constructor takes 3 vectors as arguments and 
+;; returns a frame
+
+(define (make frame origin edge1 edge2)
+  ())
+
+
+;; selectors
+
+;; origin-frame:
+
+(define (origin-frame frame)
+  ()))
+
+
+;; edge-1-frame
+
+(define (edge-1-frame frame)
+  ())
+
+
+;; edge-2-frame
+
+(define (edge-2-frame frame)
+  ())
+
+
+;; frame-co-ordinates-map
+
+;; Formula : Origin(Frame) + x.Edge-1(Frame) + y.Edge-2(Frame)
+
+(define (frame-coor-map frame)
+  (lambda (v)
+    (add-vect
+      (origin-frame frame)
+      (add-vect (scale-vect (xcor-vect v)
+			    (edge-1-frame frame))
+		(scale-vect (ycord-vect v)
+			    (edge-2-frame frame))))))
+
+
+
