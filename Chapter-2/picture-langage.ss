@@ -169,13 +169,12 @@
 ;; 2) edge-1-frame
 ;; 3) edge-2-frame
 
-
 ;; make-frame
 ;; Constructor takes 3 vectors as arguments and 
 ;; returns a frame
 
-(define (make frame origin edge1 edge2)
-  ())
+(define (make-frame origin edge1 edge2)
+  (list origin edge1 edge2))
 
 
 ;; selectors
