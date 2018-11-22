@@ -173,28 +173,37 @@
 ;; Constructor takes 3 vectors as arguments and 
 ;; returns a frame
 
+
 (define (make-frame origin edge1 edge2)
   (list origin edge1 edge2))
 
 
 ;; selectors
 
+(define (select-elem items index)
+  (define nil '())
+  (cond 
+    ((null? items) nil)
+    ((= index 0) (car items))
+    (else (select-elem (cdr items) (- index 1)))))
+
+
 ;; origin-frame:
 
-(define (origin-frame frame)
-  ()))
+(define (origin-frame frame) 
+  (select-elem frame 0))
 
 
 ;; edge-1-frame
 
 (define (edge-1-frame frame)
-  ())
+  (select-elem frame 1))
 
 
 ;; edge-2-frame
 
 (define (edge-2-frame frame)
-  ())
+  (select-elem frame 2))
 
 
 ;; frame-co-ordinates-map
@@ -209,6 +218,4 @@
 			    (edge-1-frame frame))
 		(scale-vect (ycord-vect v)
 			    (edge-2-frame frame))))))
-
-
 
