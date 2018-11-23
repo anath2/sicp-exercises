@@ -219,3 +219,16 @@
 		(scale-vect (ycord-vect v)
 			    (edge-2-frame frame))))))
 
+
+;; Segment painter: 
+;; Draws figures based on a list of line segments
+
+
+(define (segments->painter segment-list)
+  (lambda (frame)
+    (for-each  ;; Draw segment
+      (lambda (segment)
+	(draw-line
+	  ((frame-coor-map frame) (start-segment segment))
+	  ((frame-coor-map frame) (end-segment segment))))
+      segment-list)))
