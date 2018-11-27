@@ -170,7 +170,7 @@
 ;; 3) edge-2-frame
 
 ;; make-frame
-;; Constructor takes 3 vectors as arguments and 
+;; Constructor takes 3 vectors as arguments and
 ;; returns a frame
 
 
@@ -182,7 +182,7 @@
 
 (define (select-elem items index)
   (define nil '())
-  (cond 
+  (cond
     ((null? items) nil)
     ((= index 0) (car items))
     (else (select-elem (cdr items) (- index 1)))))
@@ -190,7 +190,7 @@
 
 ;; origin-frame:
 
-(define (origin-frame frame) 
+(define (origin-frame frame)
   (select-elem frame 0))
 
 
@@ -220,7 +220,7 @@
 			    (edge-2-frame frame))))))
 
 
-;; Segment painter: 
+;; Segment painter:
 ;; Draws figures based on a list of line segments
 
 
@@ -232,3 +232,23 @@
 	  ((frame-coor-map frame) (start-segment segment))
 	  ((frame-coor-map frame) (end-segment segment))))
       segment-list)))
+
+
+;; Directed Line:
+;; A line segment is represented by a vector
+;; from origin to the beginning of the line segment
+;; and a vector from origin to the end of the segment
+
+(define (make-segment start-vect end-vect)
+  (cons start-vect end-vect))
+
+
+;; Selectors
+(define (start-segment segment)
+  (car segment))
+
+
+(define (end-segment segment)
+  (cadr segment))
+
+
