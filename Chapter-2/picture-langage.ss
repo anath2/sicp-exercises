@@ -256,4 +256,7 @@
 ;; Draw outline of a frame
 
 (define (draw-frame frame)
-  ())
+  (segments->painter
+   (list (origin-frame frame)
+         (edge-1-frame frame)
+         (edge-2-frame frame))))
