@@ -257,6 +257,5 @@
 
 (define (draw-frame frame)
   (segments->painter
-   (list (origin-frame frame)
-         (edge-1-frame frame)
-         (edge-2-frame frame))))
+   (list (make-segment origin-frame edge-1-frame)
+         (make-segment origin-frame edge-2-frame)))
