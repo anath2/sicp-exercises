@@ -1,9 +1,9 @@
-;; Painter module: 
+;; Painter module:
 ;; A function for drawing images on screen. This function can then be executed recursively
 ;; or as a part of other functions to generate more complex images
 
 
-;; besides: 
+;; besides:
 ;; Create a copy of the painter besides the original painter
 
 
@@ -11,7 +11,7 @@
 ;; Create a copy of the painter below the original painter
 
 
-;; right-split: 
+;; right-split:
 ;; Call the painter function recursively to right
 
 (define (right-split painter n)
@@ -20,7 +20,7 @@
       (let (smaller (right-split painter (- n 1)))
 	(besides (below smaller smaller)))))
 
-;; up-split: 
+;; up-split:
 ;; Split the painter function recursively upwardsi
 
 (define (up-split painter n)
@@ -46,7 +46,7 @@
 
 
 ;; square-limit:
-;; If we place corner functions and four corners of 
+;; If we place corner functions and four corners of
 ;; a square, we obtain this pattern
 
 (define (square-limit painter n)
@@ -75,7 +75,7 @@
    (combine-4 painter)))
 
 
-;; square-limit-2: 
+;; square-limit-2:
 ;; Define square limit in terms of square-of-four
 
 (define (square-limit-2 painter n)
@@ -107,9 +107,9 @@
 (define right-split-2 (split besides below))
 
 
-;; Vector: 
+;; Vector:
 ;; A vector a represented in the 2d space (considered here)
-;; by x and y co-ordinates. The constructors and selectors 
+;; by x and y co-ordinates. The constructors and selectors
 ;; for which are described her
 
 ;; Constructor
@@ -118,7 +118,7 @@
   (cons x-cord y-cord))
 
 
-;; Selectors 
+;; Selectors
 
 ;; x
 
@@ -126,7 +126,7 @@
   (car vect))
 
 
-;; y 
+;; y
 
 (define (ycor-vect)
   (cadr vect))
@@ -137,7 +137,7 @@
 ;; add-vect
 
 (define (add-vect v1 v2)
-  (make-vect 
+  (make-vect
     (+ (xcor-vect v1)
        (xcor-vect v2))
     (+ (ycor-vect v1)
@@ -157,14 +157,14 @@
 ;; scale-vect
 
 (define (scale-vect s v)
-  (make-vect 
+  (make-vect
     (* s xcor-vect v)
     (* s xcor-vect v)))
 
 
-;; frame: 
+;; frame:
 ;; A frame defines how images represented in a plane
-;; It consists of 3 selectors : 
+;; It consists of 3 selectors :
 ;; 1) origin-frame
 ;; 2) edge-1-frame
 ;; 3) edge-2-frame
@@ -227,14 +227,14 @@
 (define (segments->painter segment-list)
   (lambda (frame)
     (for-each  ;; Draw segment
-      (lambda (segment)
+      (lambda (segment)4
 	(draw-line
 	  ((frame-coor-map frame) (start-segment segment))
 	  ((frame-coor-map frame) (end-segment segment))))
       segment-list)))
 
 
-;; Directed Line:
+;; Directed Line
 ;; A line segment is represented by a vector
 ;; from origin to the beginning of the line segment
 ;; and a vector from origin to the end of the segment
@@ -253,9 +253,6 @@
   (cadr segment))
 
 
-;; Draw outline of a frame
+;; Draw using segment painter:
 
-(define (draw-frame frame)
-  (segments->painter
-   (list (make-segment origin-frame edge-1-frame)
-         (make-segment origin-frame edge-2-frame)))
+;; Frame rectangle
