@@ -244,6 +244,7 @@
 
 
 ;; Selectors
+
 (define (start-segment segment)
   (car segment))
 
@@ -252,3 +253,7 @@
   (cadr segment))
 
 
+;; Draw outline of a frame
+
+(define (draw-frame frame)
+  ())
