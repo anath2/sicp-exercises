@@ -255,4 +255,26 @@
 
 ;; Draw using segment painter:
 
+
+(let  ((tl (make-vect 0 1))
+       (tr (make-vect 1 1))
+       (bl (make-vect 0 0))
+       (br (make-vect 1 0))))
+
+
 ;; Frame rectangle
+
+(define (draw-frame)
+  (segment-painter
+   (list (make-segment bl tl)
+         (make-segment bl br)
+         (make-segment br tr)
+         (make-segment tl tr))))
+
+
+;; Make 'X'
+
+(define (draw-x)
+  (segment-painter
+   (list (make-segment bl tr)
+         (make-segment br tl))))
