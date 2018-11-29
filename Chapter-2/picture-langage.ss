@@ -272,9 +272,16 @@
          (make-segment tl tr))))
 
 
-;; Make 'X'
+;; 'X'
 
 (define (draw-x)
   (segment-painter
    (list (make-segment bl tr)
          (make-segment br tl))))
+
+
+;; Diamond joining mid points of frame
+
+
+(define (draw-diamond)
+  ())
