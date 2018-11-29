@@ -265,7 +265,7 @@
 ;; Frame rectangle
 
 (define (draw-frame)
-  (segment-painter
+  (segment->painter
    (list (make-segment bl tl)
          (make-segment bl br)
          (make-segment br tr)
@@ -275,13 +275,22 @@
 ;; 'X'
 
 (define (draw-x)
-  (segment-painter
+  (segment->painter
    (list (make-segment bl tr)
          (make-segment br tl))))
 
 
 ;; Diamond joining mid points of frame
 
+(let ((tl-mid (make-vect 0 0.5))
+      (t-mid  (make-vect 0.5 1))
+      (tr-mid (make-vect 1 0.5))
+      (b-mid  (make-vect 0.5 0))))
+
 
 (define (draw-diamond)
-  ())
+  (segment->painter
+   (list (make-segment b-mid tl-mid)
+         (make-segment tl-mid t-mid)
+         (make-segment t-mid tr-mid)
+         (make-segment tr-mid b-mid))))
