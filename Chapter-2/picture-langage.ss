@@ -294,3 +294,22 @@
          (make-segment tl-mid t-mid)
          (make-segment t-mid tr-mid)
          (make-segment tr-mid b-mid))))
+
+
+;; Wave
+
+(define (draw-wave)
+  ())
+
+
+;; Painter transformation
+
+(define (transform-painter painter origin corner-1 corner-2)
+  (lambda (frame)
+    (let ((m frame-coor-map))
+      (let ((new-origin (m origin)))
+        (painter
+         (make-frame new-origin
+                     (sub-vect (m corner-1) new-origin)
+                     (sub-vect (m corner-2) new-origin)))
+        ))))
