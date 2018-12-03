@@ -313,3 +313,30 @@
                      (sub-vect (m corner-1) new-origin)
                      (sub-vect (m corner-2) new-origin)))
         ))))
+
+
+;; flip-vert: Flip the painter vertically
+
+(define (flip-vert painter)
+  (transform-painter painter
+                     (make-vect 0 1.0)
+                     (make-vect 1.0 1.0)
+                     (make-vect 0 0)))
+
+
+;; flip-horiz: Flip the painter horizontally
+
+(define (flip-horiz painter)
+  (transform-painter painter
+                     (make-vect 1.0 0)
+                     (make-vect 0 0)
+                     (make-vect 1.0 1.0)))
+
+
+;; Shrink to top right corner
+
+(define (shrink-right painter)
+  (transform-painter painter
+                     (make-vect 0.5 0.5)
+                     (make-vect 1.0 0.5)
+                     (make-vect 0.5 1.0)))
