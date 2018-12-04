@@ -340,3 +340,41 @@
                      (make-vect 0.5 0.5)
                      (make-vect 1.0 0.5)
                      (make-vect 0.5 1.0)))
+
+
+;; Rotate frame 90 degrees counter clockwise
+
+(define (rotate-90 painter)
+  (transform-painter painter
+                     (make-vect 1.0 0)
+                     (make-vect 1.0 1.0)
+                     (make-vect 0.0 0.0)))
+
+
+;; Squash frame inwards
+
+(define (squash-inwards painter)
+  (transform-painter painter
+                     (make-vect 0.0 0.0)
+                     (make-vect 0.65 0.35)
+                     (make-vect 0.35 0.65)))
+
+
+;; Besides:
+;; Function that displays painters next to each others
+
+(define (beside painter-1 painter-2)
+  (let ((split-point (make-vect 0.5 0)))
+    (let ((paint-left
+           (transform-painter painter-1
+                              (make-vect 0.0 0.0)
+                              split-point
+                              (make-vect 0.0 1.0)))
+          (paint-right
+           (transform-painter painter-2
+                              split-point
+                              (make-vect 1.0 0.0)
+                              (make-vect 0.0 1.0))))
+      (lambda (frame)
+        (paint-left frame)
+        (paint-right frame)))))
