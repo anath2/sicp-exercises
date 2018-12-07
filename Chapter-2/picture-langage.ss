@@ -378,3 +378,10 @@
       (lambda (frame)
         (paint-left frame)
         (paint-right frame)))))
+
+
+;; Flip-horiz
+;; Flips the horizontally and rotates the painters 180 deg and 270 deg
+
+(define flip-horiz
+  ())
