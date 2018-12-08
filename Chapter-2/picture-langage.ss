@@ -380,8 +380,23 @@
         (paint-right frame)))))
 
 
-;; Flip-horiz
+;; Flip-horiz:
 ;; Flips the horizontally and rotates the painters 180 deg and 270 deg
 
-(define flip-horiz
+(define (flip-horiz
+  ()))
+
+
+;; Below:
+;; Define below operation on two painters draws the first painter
+;; below the second painter
+
+;; below-1
+
+(define (below-1 painter-1 painter-2)
   ())
+
+;; below-2
+
+(define (below-2 painter-1 painter-2)
+   ())
