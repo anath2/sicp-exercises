@@ -394,7 +394,20 @@
 ;; below-1
 
 (define (below-1 painter-1 painter-2)
-  ())
+  (let ((split-point (make-vect 0 0.5)))
+    (let ((paint-below
+           (transform-painter painter-1
+                              (make-vect 0.0 0.0)
+                              (make-vect 1.0 0.0)
+                              split-point))
+          (paint-above
+           (transform-painter painter-2
+                              split-point
+                              (make-vect 1.0 0.5)
+                              (make-vect 0 1.0))))
+    (lambda (frame)
+      (paint-above frame)
+      (paint-below frame)))))
 
 ;; below-2
 
