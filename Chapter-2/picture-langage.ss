@@ -409,7 +409,8 @@
       (paint-above frame)
       (paint-below frame)))))
 
-;; below-2
+
+;; below-2 (In terms of besides)
 
 (define (below-2 painter-1 painter-2)
    ())
