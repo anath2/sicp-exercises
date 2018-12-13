@@ -1,6 +1,6 @@
 ;; memq
-;; Returns the list if the symbod is present in
-;;  the list
+;; Returns the sublist of the list with item as the first
+;; element of the list if the symbod is present in list
 
 (define (memq item x)
   (cond ((null? x) false)
