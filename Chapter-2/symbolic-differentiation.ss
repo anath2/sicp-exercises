@@ -19,3 +19,25 @@
 ;; (multiplier e) : Multiplier of the product e
 ;; (multiplicand e) : Multiplicand of the product e
 ;; (make-product m1 m2) : Construct the product of m1 and m2
+
+
+;; Deriv
+;; Take derivative based on the functions described
+;; above
+
+(define (derive exp var)
+  (cond ((number? exp) 0)
+        ((variable? exp)
+         (if (same-variable? exp var) 1 0))
+        ((sum? exp)
+         (make-sum
+          (deriv (augend exp) var)
+          (deriv (addend exp) var)))
+        ((product? exp)
+         (make-sum
+          (make-product
+           (multiplier exp) (deriv (multiplicand exp) var))
+          (make-product
+           (multiplicand exp) (deriv (multiplier exp) var))))
+        (else
+         (error "Unknow expression given"))))
