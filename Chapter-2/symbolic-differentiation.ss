@@ -21,6 +21,31 @@
 ;; (make-product m1 m2) : Construct the product of m1 and m2
 
 
+;; Representation
+
+;; In our representation, variables are represented as variables
+;; And expression are represented by lists such as :
+;; ax + b => (+ (* a x) b)
+;; Hence we cand define the above functions as following
+
+(define (variable? e) (symbol? e))
+
+
+(define (same-variable? v1 v1)
+  (and
+   (variable? v1)
+   (variable? v2)
+   (eq? v1 v2)))
+
+
+(define (make-sum a1 a2)
+  (list '+ a1 a2))
+
+
+(define (make-product p1 p2)
+  (list '* p1 p2))
+
+
 ;; Deriv
 ;; Take derivative based on the functions described
 ;; above
