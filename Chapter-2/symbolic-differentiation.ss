@@ -42,8 +42,31 @@
   (list '+ a1 a2))
 
 
+(define (sum? e)
+  (and (pair? e)
+       (eq? (car e) '+)))
+
+
+(define (addend e) (cadr e))
+
+
+(define (augend e) (caddr e))
+
+
 (define (make-product p1 p2)
   (list '* p1 p2))
+
+
+(define (product? e)
+  (and
+   (pair? e)
+   (eq? (car e) '*)))
+
+
+(define (multiplier e) (cadr e))
+
+
+(define (multiplicand e) (caddr e))
 
 
 ;; Deriv
