@@ -42,6 +42,8 @@
   (and (number? exp) (= exp num)))
 
 
+;; Addition rule of derivative
+
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
@@ -60,16 +62,14 @@
 (define (augend e) (caddr e))
 
 
+;; Product rule of derivative
+
 (define (make-product p1 p2)
   (cond ((or (=number? p1 0) (=number? p2 0)) 0)
         ((=number? p1 1) p2)
         ((=number? p2 1) p1)
         (and (number? p1) (number? p2) (* p1 p2))
         (else (list '* p1 p2))))
-
-
-(define (make-product p1 p2)
-  (list '* p1 p2))
 
 
 (define (product? e)
@@ -82,6 +82,29 @@
 
 
 (define (multiplicand e) (caddr e))
+
+
+;; Exponentiation rule
+
+(define (make-exponentiation base exponent)
+  (cond ((=number? base 0) 0)
+        ((=number? base 1) 1)
+        ((=number? exponent 0) 1)
+        ((=number? exponent 1) base)
+        (else
+          (list '** base exponent))))
+
+
+(define (exponentiation? e)
+  (and (pair? e)
+       (eq (car e) '**)
+       (= (length e) 3)))
+
+
+(define (base e) (cadr e))
+
+
+(define (exponent e) (caddr e))
 
 
 ;; Deriv
@@ -102,5 +125,10 @@
            (multiplier exp) (deriv (multiplicand exp) var))
           (make-product
            (multiplicand exp) (deriv (multiplier exp) var))))
+        ((exponentiation? exp)
+         (make-product
+          (exponent exp)
+          (make-exponent (base exp) (- (exponent exp) 1))
+          (deriv (base exp))))
         (else
          (error "Unknow expression given"))))
