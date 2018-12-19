@@ -59,7 +59,17 @@
 (define (addend e) (cadr e))
 
 
-(define (augend e) (caddr e))
+(define (augend e)
+  (let (cddr (cddr e) a)
+    (if (= (length a) 1)
+        (car a)
+        (make-sum-list a))))
+
+
+(define (make-sum-list l)
+  (if (= (length l) 2)
+      (list '+ (car l) (cadr l))
+      (make-sum (car l) (make-sum-list (cdr l)))))
 
 
 ;; Product rule of derivative
