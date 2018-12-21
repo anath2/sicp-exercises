@@ -5,7 +5,6 @@
 ;; 2. diff of (u + v)
 ;; 3. diff of (u . v)
 
-
 ;; Other formulae:
 
 ;; (variable? e) : Is e a variable?
@@ -19,7 +18,10 @@
 ;; (multiplier e) : Multiplier of the product e
 ;; (multiplicand e) : Multiplicand of the product e
 ;; (make-product m1 m2) : Construct the product of m1 and m2
-
+;; (exponentiation? e) : Is e an exponentiation
+;; (base e) : Base of exponentiation expression
+;; (exponent e) : Exponent of exponentiation expression
+;; (make-exponentiation base exponent) ;; Construct the exponentiation of base and exponent
 
 ;; Representation
 
