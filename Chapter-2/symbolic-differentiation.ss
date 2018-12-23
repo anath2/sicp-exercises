@@ -68,6 +68,13 @@
         (make-sum-list a))))
 
 
+(define (make-sum a1 a2)
+  (cond ((=number? a1 0) a2)
+  ((=number? a2 0) a1)
+  ((and (number? a1) (number? a2)) (+ a1 a2))
+  (else (list '+ a1 a2))))
+
+
 (define (make-sum-list l)
   (if (= (length l) 2)
       (list '+ (car l) (cadr l))
@@ -82,6 +89,12 @@
         ((=number? p2 1) p1)
         (and (number? p1) (number? p2) (* p1 p2))
         (else (list '* p1 p2))))
+
+
+(define (make-product-list l)
+  (if (= (length l) 2)
+      (list '* (car l) (cadr l))
+      (make-product (car l) (make-product-list (cdr l)))))
 
 
 (define (product? e)
