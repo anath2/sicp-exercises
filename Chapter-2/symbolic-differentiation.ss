@@ -68,17 +68,17 @@
         (make-sum-list a))))
 
 
-(define (make-sum a1 a2)
-  (cond ((=number? a1 0) a2)
-  ((=number? a2 0) a1)
-  ((and (number? a1) (number? a2)) (+ a1 a2))
-  (else (list '+ a1 a2))))
-
-
 (define (make-sum-list l)
   (if (= (length l) 2)
       (list '+ (car l) (cadr l))
       (make-sum (car l) (make-sum-list (cdr l)))))
+
+
+(define (make-sum a1 a2)
+  (cond ((=number? a1 0) a2)
+  ((=number? a2 0) a1)
+  ((and (number? a1) (number? a2)) (+ a1 a2))
+  (else (make-sum-list (list a1 a2)))))
 
 
 ;; Product rule of derivative
