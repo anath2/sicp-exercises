@@ -30,6 +30,7 @@
 ;; ax + b => (+ (* a x) b)
 ;; Hence we cand define the above functions as following
 
+
 (define (variable? e) (symbol? e))
 
 
@@ -55,23 +56,14 @@
 
 
 (define (augend e)
-  (let (a (cddr e))
-    (if (= (length a) 1)
-        (car a)
-        (make-sum-list a))))
+  (accumulate make-sum 0 (cddr e)))
 
 
 (define (make-sum a1 a2)
   (cond ((=number? a1 0) a2)
         ((=number? a2 0) a1)
         ((and (number? a1) (number? a2)) (+ a1 a2))
-        (else (make-sum-list (list a1 a2)))))
-
-
-(define (make-sum-list l)
-  (if (= (length l) 2)
-      (list '+ (car l) (cadr l))
-      (make-sum (car l) (make-sum-list (cdr l)))))
+        (else (list '+ a1 a2))))
 
 
 ;; Product rule of derivative
@@ -86,16 +78,7 @@
 
 
 (define (multiplicand e)
-  (let (m (cddr e))
-    (if (= (length m) 1)
-        (car m)
-        (make-sum-list m))))
-
-
-(define (make-product-list l)
-  (if (= (length l) 2)
-      (list '* (car l) (cadr l))
-      (make-product (car l) (make-product-list (cdr l)))))
+  (accumulate make-product 1 (cddr e)))
 
 
 (define (make-product p1 p2)
@@ -103,7 +86,7 @@
         ((=number? p1 1) p2)
         ((=number? p2 1) p1)
         ((and (number? p1) (number? p2)) (* p1 p2))
-        (else (make-product-list (list p1 p2)))))
+        (else (list '* p1 p2))))
 
 
 ;; Exponentiation rule
@@ -154,3 +137,14 @@
           (deriv (base exp))))
         (else
          (error "Unknow expression given"))))
+
+
+;; Utilities
+
+;; Accumulate
+
+(define (accumulate op initial seq)
+  (if (null? seq)
+      initial
+      (op (car seq)
+          (accumulate op initial (cdr seq)))))
