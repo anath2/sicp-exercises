@@ -55,23 +55,23 @@
 
 
 (define (augend e)
-  (let (cddr (cddr e) a)
+  (let (a (cddr e))
     (if (= (length a) 1)
         (car a)
         (make-sum-list a))))
+
+
+(define (make-sum a1 a2)
+  (cond ((=number? a1 0) a2)
+        ((=number? a2 0) a1)
+        ((and (number? a1) (number? a2)) (+ a1 a2))
+        (else (make-sum-list (list a1 a2)))))
 
 
 (define (make-sum-list l)
   (if (= (length l) 2)
       (list '+ (car l) (cadr l))
       (make-sum (car l) (make-sum-list (cdr l)))))
-
-
-(define (make-sum a1 a2)
-  (cond ((=number? a1 0) a2)
-  ((=number? a2 0) a1)
-  ((and (number? a1) (number? a2)) (+ a1 a2))
-  (else (make-sum-list (list a1 a2)))))
 
 
 ;; Product rule of derivative
@@ -85,7 +85,11 @@
 (define (multiplier e) (cadr e))
 
 
-(define (multiplicand e) (caddr e))
+(define (multiplicand e)
+  (let (m (cddr e))
+    (if (= (length m) 1)
+        (car m)
+        (make-sum-list m))))
 
 
 (define (make-product-list l)
