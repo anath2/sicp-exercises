@@ -46,13 +46,6 @@
 
 ;; Addition rule of derivative
 
-(define (make-sum a1 a2)
-  (cond ((=number? a1 0) a2)
-        ((=number? a2 0) a1)
-        ((and (number? a1) (number? a2)) (+ a1 a2))
-        (else (list '+ a1 a2))))
-
-
 (define (sum? e)
   (and (pair? e)
        (eq? (car e) '+)))
@@ -83,20 +76,6 @@
 
 ;; Product rule of derivative
 
-(define (make-product p1 p2)
-  (cond ((or (=number? p1 0) (=number? p2 0)) 0)
-        ((=number? p1 1) p2)
-        ((=number? p2 1) p1)
-        (and (number? p1) (number? p2) (* p1 p2))
-        (else (list '* p1 p2))))
-
-
-(define (make-product-list l)
-  (if (= (length l) 2)
-      (list '* (car l) (cadr l))
-      (make-product (car l) (make-product-list (cdr l)))))
-
-
 (define (product? e)
   (and
    (pair? e)
@@ -107,6 +86,20 @@
 
 
 (define (multiplicand e) (caddr e))
+
+
+(define (make-product-list l)
+  (if (= (length l) 2)
+      (list '* (car l) (cadr l))
+      (make-product (car l) (make-product-list (cdr l)))))
+
+
+(define (make-product p1 p2)
+  (cond ((or (=number? a1 0) (=number? a2 0)) 0)
+        ((=number? p1 1) p2)
+        ((=number? p2 1) p1)
+        ((and (number? p1) (number? p2)) (* p1 p2))
+        (else (make-product-list (list p1 p2)))))
 
 
 ;; Exponentiation rule
