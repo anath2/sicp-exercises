@@ -10,9 +10,7 @@
 
 ;; Set as unordered list
 
-;; Set operations can be represented as
-
-(define (element-of-set?) x set
+(define (element-of-set? x set)
   (cond ((null? set) false)
         ((equal? x (car set)) true)
         (else (element-of-set x (cdr set)))))
@@ -39,3 +37,12 @@
       (union-set
        (cdr set1)
        (adjoin-set (car set1) set2))))
+
+
+;; Set as ordered list
+
+(define (element-of-set? x set)
+  (cond ((null? set) false)
+        ((= x (car set)) true)
+        ((< x (car set)) false)
+        (else (element-of-set? x (cdr set)))))
