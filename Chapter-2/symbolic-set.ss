@@ -39,6 +39,9 @@
        (adjoin-set (car set1) set2))))
 
 
+;; Considering the case, set may contain duplicates
+
+
 ;; Set as ordered list
 
 (define (element-of-set? x set)
