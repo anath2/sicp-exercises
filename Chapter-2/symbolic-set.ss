@@ -15,6 +15,7 @@
         ((equal? x (car set)) true)
         (else (element-of-set x (cdr set)))))
 
+
 (define (intersection-set set1 set2)
   (cond ((or (null? set1) (null? set2)) '())
         ((element-of-set? (car set1) set2)
@@ -53,3 +54,13 @@
         ((= x (car set)) true)
         ((< x (car set)) false)
         (else (element-of-set? x (cdr set)))))
+
+
+(define (ajoin-set x set)
+  (cond ((null? set) (list x))
+        ((= x (car set)) set)
+        ((< x (car set)) (cons x set))
+        (else
+         (cons
+          (car set)
+          (adjoin-set x (cdr set))))))
