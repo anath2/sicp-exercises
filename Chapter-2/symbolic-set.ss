@@ -64,3 +64,11 @@
          (cons
           (car set)
           (adjoin-set x (cdr set))))))
+
+
+(define (intersection-set set1 set2)
+  ())
+
+
+(define (union-set set1 set2)
+  ())
