@@ -75,6 +75,15 @@
                      (intersection-set (cdr set1)
                                        (cdr set2)))
                ((< x1 x2)
-                (intersection-set (cdr set) set2))
+                (intersection-set (cdr set1) set2))
                ((> x1 x2)
                 (intersection-set set1 (cdr set2))))))))
+
+
+(define (union-set set1 set 2)
+  (cond ((null? set1) set2)
+        ((element-of-set? (car set1) set2)
+         (union-set (cdr set1) set2))
+        (else
+         (union-set (cdr set1)
+                    (ajoin-set (car set1) set2)))))
