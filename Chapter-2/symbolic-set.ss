@@ -87,3 +87,22 @@
         (else
          (union-set (cdr set1)
                     (ajoin-set (car set1) set2)))))
+
+
+;; Defining set representation as trees
+
+
+;; Selectors
+
+(define (entry tree) (car tree))
+
+
+(define (left-branch tree) (cadr tree))
+
+
+(define (right-branch tree) (caddr tree))
+
+
+;; Constructor
+
+(define (make-tree entry left right) (list entry left right))
