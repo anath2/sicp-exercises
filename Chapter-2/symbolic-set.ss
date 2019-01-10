@@ -106,3 +106,12 @@
 ;; Constructor
 
 (define (make-tree entry left right) (list entry left right))
+
+
+(define (element-of-set? x set)
+  (cond ((null? set) false)
+        ((= (entry set) x) true)
+        ((< (entry set) x)
+         (element-of-set? x (left-branch set)))
+        ((> (entry set) x)
+         (element-of-set? x (right-branch set)))))
