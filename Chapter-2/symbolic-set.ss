@@ -118,4 +118,13 @@
 
 
 (define (ajoin-set x set)
-  ())
+  (cond ((null? set) (make-tree x '() '()))
+        ((= x (entry x)) set)
+        ((< x (entry x))
+         (make-tree (entry set)
+                    (adjoin-set x (left-branch set))
+                    (right-branch set)))
+        ((> x (entry set))
+         (make-tree (entry set)
+                    (left-branch set)
+                    (adjoin-set x (right-branch set))))))
