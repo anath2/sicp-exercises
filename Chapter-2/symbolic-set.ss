@@ -115,3 +115,7 @@
          (element-of-set? x (left-branch set)))
         ((> (entry set) x)
          (element-of-set? x (right-branch set)))))
+
+
+(define (ajoin-set x set)
+  ())
