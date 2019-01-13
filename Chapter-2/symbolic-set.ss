@@ -128,3 +128,69 @@
          (make-tree (entry set)
                     (left-branch set)
                     (adjoin-set x (right-branch set))))))
+
+
+;; Tree to list
+
+(define (append list1 list2)
+  (if (null? list1)
+      list2
+      (cons (car list1)
+            (append (cdr list1) list2)))
+
+
+(define (tree->list-1 tree)
+  (if (null? tree)
+      '()
+      (append
+       (tree-list-1 (left-branch tree))
+       (cons
+        (entry tree)
+        (tree-list-1 (right-branch tree))))))
+
+
+(define (list->tree-2 tree)
+  (define (copy-to-list tree result-list)
+    (if (null? tree)
+        result-list
+        (copy-to-list (left-branch tree)
+                      (cons (entry tree)
+                            (copy-to-list (right-branch tree)
+                                          result-list)))))
+  (copy-to-list tree '()))
+
+
+;; Tree representations
+
+;; List representation 1 : 1 3 5 7 9 11
+;; List representation 2 : 1 3 5 7 9 11
+
+;; The second version has a complexitiy of O(n) since
+;; each element of the list is traversed once followed by a simple
+;; cons operation of that takes O(1) time
+
+;; The first operations call the append operation as defined above
+;; since append is proportional to the size of the list, and the list
+;; that is provided as input is about half the size of the total elements
+;; and this operation is called recursively, the complexity in the second case
+;; would be O(nlogn)
+
+;; List to balanced tree
+
+(define (list->tree elements)
+  (partial-tree elements (length elements))
+  (define (partial-tree elts n)
+    (if (= n 0)
+        (cons '() elts)
+        (let ((left-size (quotient (- n 1) 2)))
+          (let ((left-result (partial-tree elts left-size)))
+            (let ((left-tree (car left-result))
+                  (non-left-elts (cdr left-result))
+                  (right-size (- n (+ left-size 1))))
+              (let ((this-entry (car non-left-elts))
+                    (right-result (partial-tree (cdr non-left-elts)
+                                                right-size)))
+                (let ((right-tree (car right-result))
+                      (remaining-elts (cdr right-result)))
+                  (cons (make-tree this-entry left-tree right-tree)
+                        remaining-elts)))))))))
