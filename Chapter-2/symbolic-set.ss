@@ -175,6 +175,8 @@
 ;; and this operation is called recursively, the complexity in the second case
 ;; would be O(nlogn)
 
+
+
 ;; List to balanced tree
 
 (define (list->tree elements)
@@ -194,3 +196,9 @@
                       (remaining-elts (cdr right-result)))
                   (cons (make-tree this-entry left-tree right-tree)
                         remaining-elts)))))))))
+
+;; a.
+;; Example:
+;; Make balanced tree from '(1 3 5 7 9 11)
+;;
+;;
