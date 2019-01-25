@@ -200,5 +200,5 @@
 ;; a.
 ;; Example:
 ;; Make balanced tree from '(1 3 5 7 9 11)
-;;
-;;
+;; '(5 (3 (1) ()) (9 (7) (11)))
+;; Complexity log(n)
