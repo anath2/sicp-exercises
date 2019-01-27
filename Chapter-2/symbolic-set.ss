@@ -201,4 +201,17 @@
 ;; Example:
 ;; Make balanced tree from '(1 3 5 7 9 11)
 ;; '(5 (3 (1) ()) (9 (7) (11)))
+;; b.
 ;; Complexity log(n)
+
+
+;; Union
+
+(define (union-set tree-1 tree-2)
+  ())
+
+
+;; Intersection
+
+(define (intersection-set tree-1 tree-2)
+  ())
