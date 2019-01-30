@@ -43,3 +43,20 @@
   (if (leaf? tree)
       (weight-leaf tree)
       (cadddr tree)))
+
+;; Decode procedure
+;; Decodes a sequence of bits given a huffman tree
+
+(define (decode bits tree)
+  (define (decode-1 bits current-branch)
+    (if (null? bits) '()
+        (let ((next-branch
+               (choose-branch (car bits) current-branch)))
+          (if (leaf? next-branch)
+              (cons (symbol-leaf next-branch)
+                    (decode-1 (cdr bits) next-branch))
+
+              (decode-1 (cdr bits) next-branch)))))
+
+
+  (decode-1 bits tree))
