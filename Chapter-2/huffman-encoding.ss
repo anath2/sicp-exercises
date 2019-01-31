@@ -76,3 +76,14 @@
   (cond ((= 0 bit) (left-branch tree))
         ((= 1 bit) (right-branch tree))
         (else (error "bad bit CHOOSE BRANCH" bit))))
+
+
+;; Adjoin an element to a set
+;; The elements are added in a way that they are ascending order
+;; by weight.
+
+(define (adjoin-set set x)
+  (cond ((null? set) (list x))
+        ((< (weight x) (weight (car set))) (cons x set))
+        (else (cons (car set)
+                    (adjoin-set x (cdr set))))))
