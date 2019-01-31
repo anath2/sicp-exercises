@@ -44,8 +44,14 @@
       (weight-leaf tree)
       (cadddr tree)))
 
+
 ;; Decode procedure
+
 ;; Decodes a sequence of bits given a huffman tree
+;; The decode procedure is similar to search and accumulate
+;; procedure on a binary search tree
+;; A sequence of bits represent a symbol, the decoder traverses
+;; across the tree until the symbol is found
 
 (define (decode bits tree)
   (define (decode-1 bits current-branch)
@@ -58,5 +64,15 @@
 
               (decode-1 (cdr bits) next-branch)))))
 
-
   (decode-1 bits tree))
+
+
+;; choose-branch
+
+;; Chose branch procedure selects the left branch if the bit
+;; is 0 otherwise chooses the right branch
+
+(define (choose-branch bit tree)
+  (cond ((= 0 bit) (left-branch tree))
+        ((= 1 bit) (right-branch tree))
+        (else (error "bad bit CHOOSE BRANCH" bit))))
