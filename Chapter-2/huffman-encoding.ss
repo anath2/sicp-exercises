@@ -117,3 +117,12 @@
 
 ;; '(0 1 1 0 0 1 0 1 0 1 1 1 0)
 ;; '(A D     A B   B   C     A)
+
+
+;; Ex 2.68
+
+(define (encode-message message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode-message (cdr message) tree))))
