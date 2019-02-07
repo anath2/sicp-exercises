@@ -126,3 +126,22 @@
       '()
       (append (encode-symbol (car message) tree)
               (encode-message (cdr message) tree))))
+
+;; TODO
+
+;; Helpers
+
+(define (member? symbols elem)
+  (cond ((null? symbols) false)
+        ((eq? (car symbols) elem) true)
+        (else (member? (cdr symbols) elem))))
+
+
+(define (encode-symbol symbol tree)
+  ())
+
+
+;; Ex 2.69
+
+(define (generate-huffman-tree pairs)
+  (successive-merge (make-leaf-set pairs)))
