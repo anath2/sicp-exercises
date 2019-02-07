@@ -121,24 +121,29 @@
 
 ;; Ex 2.68
 
+
+;; TODO
+
 (define (encode-message message tree)
   (if (null? message)
       '()
       (append (encode-symbol (car message) tree)
               (encode-message (cdr message) tree))))
 
-;; TODO
 
-;; Helpers
+(define (encode-symbol symbol tree)
+  (define (encode symbol tree binary-string)
+    (cond ((not (member? (symbols tree) symbol)) (error "Symbol not in tree"))
+          ((leaf? tree) binary-string))
+          ((member? (left tree) symbol) (encode symbol (left tree) (cons 0 binary-string)))
+          (else (encode symbol (right tree) (cons 1 binary-string))))
+  (encode symbol tree '()))
+
 
 (define (member? symbols elem)
   (cond ((null? symbols) false)
         ((eq? (car symbols) elem) true)
         (else (member? (cdr symbols) elem))))
-
-
-(define (encode-symbol symbol tree)
-  ())
 
 
 ;; Ex 2.69
