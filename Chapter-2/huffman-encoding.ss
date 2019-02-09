@@ -78,17 +78,6 @@
         (else (error "bad bit CHOOSE BRANCH" bit))))
 
 
-;; Adjoin an element to a set
-;; The elements are added in a way that they are ascending order
-;; by weight.
-
-(define (adjoin-set set x)
-  (cond ((null? set) (list x))
-        ((< (weight x) (weight (car set))) (cons x set))
-        (else (cons (car set)
-                    (adjoin-set x (cdr set))))))
-
-
 ;; Creates an initial ordering for combining sets of elements
 
 (define (make-leaf-set pairs)
@@ -98,6 +87,17 @@
         (adjoin-set (make-leaf (car pair)   ;; Symbol
                                (cadr pair)) ;; Weight
                     (make-left-set (cdr pairs))))))
+
+
+;; Adjoin an element to a set
+;; The elements are added in a way that they are ascending order
+;; by weight.
+
+(define (adjoin-set x set)
+  (cond ((null? set) (list x))
+        ((< (weight x) (weight (car set))) (cons x set))
+        (else (cons (car set)
+                    (adjoin-set x (cdr set))))))
 
 
 ;; Ex 2.67
@@ -120,9 +120,6 @@
 
 
 ;; Ex 2.68
-
-
-;; TODO
 
 (define (encode-message message tree)
   (if (null? message)
@@ -150,6 +147,16 @@
 
 (define (generate-huffman-tree pairs)
   (successive-merge (make-leaf-set pairs)))
+
+
+(define (successive-merge leaf-set)
+  (if (= (length leaf-set) 1)
+      (car leaf-set)
+      (let ((first (car leaf-set))
+            (second (cadr leaf-set))
+            (rest (cddr leaf-set)))
+        (successive-merge (adjoin-set (make-code-tree first second)
+                                      rest)))))
 
 
 ;; Ex 2.70
