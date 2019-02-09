@@ -129,12 +129,19 @@
 
 
 (define (encode-symbol symbol tree)
-  (define (encode symbol tree binary-string)
-    (cond ((not (member? (symbols tree) symbol)) (error "Symbol not in tree"))
-          ((leaf? tree) binary-string))
-          ((member? (left tree) symbol) (encode symbol (left tree) (cons 0 binary-string)))
-          (else (encode symbol (right tree) (cons 1 binary-string))))
-  (encode symbol tree '()))
+
+  (define (correct-branch symbol branch)
+    (if (leaf? branch)
+        (eq? (symbol-leaf) symbol)
+        (member? (symbols branch) symbol)))
+
+  (let ((lb (left-branch tree))
+        (rb (right-branch tree)))
+    (cond ((correct-branch symbol lb)
+           (if (leaf? lb) '(0) (cons 0 (encode-symbol lb))))
+          ((correct-branch symbol rb)
+           (if (leaf? rb) '(1) (cons 1 (encode-symbol rb))))
+          (else (error "symbol not present")))))
 
 
 (define (member? symbols elem)
@@ -149,14 +156,14 @@
   (successive-merge (make-leaf-set pairs)))
 
 
-(define (successive-merge leaf-set)
+(define (successive-merge leaf-set)  ;; leaf-set in ascending order
   (if (= (length leaf-set) 1)
       (car leaf-set)
       (let ((first (car leaf-set))
             (second (cadr leaf-set))
             (rest (cddr leaf-set)))
         (successive-merge (adjoin-set (make-code-tree first second)
-                                      rest)))))
+                                      rest)))))  ;; Arrange once again in ascending order
 
 
 ;; Ex 2.70
