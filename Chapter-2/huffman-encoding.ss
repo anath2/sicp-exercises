@@ -184,3 +184,15 @@
 ;; Sha na na na na na na na na
 ;; Wah yip yip yip yip yip yip yip yip yip
 ;; Sha boom
+
+(define (songtree (generate-huffman-tree '((A, 2),
+                                           (NA, 2),
+                                           (BOOM 1),
+                                           (SHA 3),
+                                           (GET 2),
+                                           (YIP 9),
+                                           (JOB 2),
+                                           (WAH 1)))))
+
+
+;; Ex. 2.71
