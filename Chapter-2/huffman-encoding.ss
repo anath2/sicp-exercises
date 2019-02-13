@@ -195,4 +195,16 @@
                                            (WAH 1)))))
 
 
+;; Leaf set:
+;;
+;; (list (leaf' WAH 1)
+;;       (leaf' BOOM 1)
+;;       (leaf' NA 2)
+;;       (leaf' A 2)
+;;       (leaf' JOB 2)
+;;       (leaf' GET 2)
+;;       (leaf SHA 3)
+;;       (leaf' YIP 9))
+
+
 ;; Ex. 2.71
