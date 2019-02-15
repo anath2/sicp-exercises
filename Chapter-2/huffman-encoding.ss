@@ -205,6 +205,12 @@
 ;;       (leaf' GET 2)
 ;;       (leaf SHA 3)
 ;;       (leaf' YIP 9))
+;;
+;; Tree:
+;;
+;; ((leaf na 16)
+;; ((leaf yip 9) (((leaf a 2) ((leaf wah 1) (leaf boom 1) (wah boom) 2) (a wah boom) 4) ((leaf sha 3) ((leaf job 2) (leaf get 2) (job get) 4) (sha job get) 7) (a wah boom sha job get) 11) (yip a wah boom sha job get) 20)
+;; (na yip a wah boom sha job get) 36)
 
 
 ;; Ex. 2.71
