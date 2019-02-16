@@ -185,8 +185,8 @@
 ;; Wah yip yip yip yip yip yip yip yip yip
 ;; Sha boom
 
-(define (songtree (generate-huffman-tree '((A, 2),
-                                           (NA, 2),
+(define (songtree (generate-huffman-tree '((A 2),
+                                           (NA 16),
                                            (BOOM 1),
                                            (SHA 3),
                                            (GET 2),
@@ -199,18 +199,66 @@
 ;;
 ;; (list (leaf' WAH 1)
 ;;       (leaf' BOOM 1)
-;;       (leaf' NA 2)
 ;;       (leaf' A 2)
 ;;       (leaf' JOB 2)
 ;;       (leaf' GET 2)
-;;       (leaf SHA 3)
+;;       (leaf' SHA 3)
 ;;       (leaf' YIP 9))
-;;
+;;       (leaf' NA 16))
 ;; Tree:
+;; (
+;;  (leaf na 16)
+;;  (
+;;    (leaf yip 9)
+;;    (
+;;      (
+;;        (leaf a 2)
+;;        (
+;;          (leaf wah 1)
+;;          (leaf boom 1)
+;;          (wah boom) 2
+;;        )
+;;          (a wah boom) 4
+;;      )
+;;      (
+;;        (leaf sha 3)
+;;        (
+;;          (leaf job 2)
+;;          (leaf get 2)
+;;          (job get) 4)
+;;          (sha job get) 7
+;;      )
+;;      (a wah boom sha job get) 11
+;;    )
+;;    (yip a wah boom sha job get) 20
+;;  )
+;;  (na yip a wah boom sha job get) 36
+;; )
 ;;
-;; ((leaf na 16)
-;; ((leaf yip 9) (((leaf a 2) ((leaf wah 1) (leaf boom 1) (wah boom) 2) (a wah boom) 4) ((leaf sha 3) ((leaf job 2) (leaf get 2) (job get) 4) (sha job get) 7) (a wah boom sha job get) 11) (yip a wah boom sha job get) 20)
-;; (na yip a wah boom sha job get) 36)
+;; Song to encode:
+;;
+;; Get a job
+;; Sha na na na na na na na na
+;; Get a job
+;; Sha na na na na na na na na
+;; Wah yip yip yip yip yip yip yip yip yip
+;; Sha boom
 
+;; Encoding
+;;
+;; 1 1 1 1 1  1 1 0 0  1 1 1 1 0
+;; 1 1 1 0  0  0  0  0  0  0  0  0
+;; 1 1 1 1 1  1 1 0 0  1 1 1 1 0
+;; 1 1 1 0  0  0  0  0  0  0  0  0
+;; 1 1 0 1 1 0  1 0  1 0  1 0  1 0  1 0  1 0  1 0  1 0  1 0
+;; 1 1 1 1 1  1 1 0 1 1
+;;
+;; Bits needed to encode : 86
+;;
+;; If using fixed length encoding :
+;; number of symbols = 8
+;; Number of bits needed to encode = 2 ^ 3
+;; Words in song = 34
+;; Total = 36 * 3 = 102
 
 ;; Ex. 2.71
