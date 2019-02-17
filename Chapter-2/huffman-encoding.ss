@@ -262,3 +262,42 @@
 ;; Total = 36 * 3 = 102
 
 ;; Ex. 2.71
+;;
+;; Huffman tree with n symbols:
+;; Relative frequency: 1 2 4 .. 2 ^ (n - 1)
+;;
+;; Huffman tree (n=5)
+;;
+;; leaf-set ((leaf 1' 1) (leaf 2' 2) (leaf 3' 4) (leaf 4' 8) (leaf 5' 16))
+;; Tree:
+;; (
+;;  (
+;;   (
+;;    (
+;;     (
+;;      (leaf 1' 1)
+;;      (leaf 2' 2)
+;;      (1' 2' 3)
+;;     )
+;;     (leaf 3' 4)
+;     )
+;;    (1' 2' 3' 7)
+;;   )
+;;   (leaf 4' 8)
+;;   (1' 2' 3' 4' 15)
+;;  )
+;;  (leaf 5' 16)
+;;  (1' 2' 3' 4' 5' 31)
+;; )
+;;
+;; Huffman tree (n=10)
+;; leaf-set:
+;;  (
+;;   (leaf 1' 1)
+;;   (leaf 2' 2)
+;;   (leaf 3' 4)
+;;   (leaf 4' 8)
+;;   (leaf 5' 16)
+;;   TBD
+;;
+;; )
