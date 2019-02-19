@@ -349,3 +349,6 @@
 ;;
 ;; Bits required to encode most frequent #: 1
 ;; Bits required to encode least frequent #: n - 1
+
+
+;; 2.72
