@@ -345,3 +345,7 @@
 ;;  (leaf 10' 512)
 ;;  (1' 2' 3' 4' 5' 6' 7' 8' 9' 10' 1023)
 ;; )
+;;
+;;
+;; Bits required to encode most frequent #: 1
+;; Bits required to encode least frequent #: n - 1
