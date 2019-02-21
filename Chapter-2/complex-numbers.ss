@@ -15,9 +15,11 @@
 
 (define (img-part z) (cadr z))
 
-(define (magnitude z) (car z))
+(define (magnitude z)
+  (sqrt (+ (square (real-part z)) (square (img-part z))))
 
-(define (angle z) (cadr z))
+(define (angle z)
+  (atan (img-part z) (real-part z)))
 
 
 ;; Multiplication and addition of complex numbers
