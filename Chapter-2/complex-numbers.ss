@@ -38,11 +38,11 @@
 (define (img-part-rectangular z) (cdr z))
 
 
-(define (magnitude-rectangular z)
+(define (mag-rectangular z)
   (sqrt (+ (square (real-part z)) (square (img-part z))))
 
 
-(define (angle-rectangular z)
+(define (ang-rectangular z)
   (atan (img-part z) (real-part z)))
 
 
@@ -84,27 +84,61 @@
               (cons r a)))
 
 
+;; Generic selectors
+
+(define (real-part z)
+  (cond ((rectangular? z)
+         (real-part-rectangular (contents z)))
+        ((polar? z)
+         (real-part-polar (contents z)))
+        (else (error "Unknown type - REAL PART" z))))
+
+
+(define (img-part z)
+  (cond ((rectangular? z)
+         (img-part-rectangular (contents z)))
+        ((polar? z)
+         (img-part-polar (contents z)))
+        (else (error "Unknown type - IMG PART" z))))
+
+
+(define (magnitude z)
+  (cond ((rectangular? z)
+         (mag-rectangular (contents z)))
+        ((polar? z)
+         (mag-polar (contents z)))
+        (else (error "Unknown type - MAG" z))))
+
+
+(define (angle z)
+  (cond ((rectangular? z)
+         (ang-rectangular (contents z)))
+        ((polar? z)
+         (ang-polar (contents z)))
+        (else (error "Unknown type - ANG" z))))
+
+
 ;; Multiplication and addition of complex numbers
 
-;; (define (add-complex z1 z2)
-;;   (make-from-real-img
-;;     (+ (real-part z1) (real-part z2))
-;;     (+ (img-part z1) (img-part z2))))
+(define (add-complex z1 z2)
+  (make-from-real-img
+    (+ (real-part z1) (real-part z2))
+    (+ (img-part z1) (img-part z2))))
 
 
-;; (define (sub-complex z1 z2)
-;;   (make-from-real-img
-;;     (- (real-part z1) (real-part z2))
-;;     (- (img-part z1) (img-part z2))))
+(define (sub-complex z1 z2)
+  (make-from-real-img
+    (- (real-part z1) (real-part z2))
+    (- (img-part z1) (img-part z2))))
 
 
-;; (define (mul-complex z1 z2)
-;;   (make-from-mag-ang
-;;     (* (magnitude z1) (magnitude z2))
-;;     (+ (angle z1) (angle z2))))
+(define (mul-complex z1 z2)
+  (make-from-mag-ang
+    (* (magnitude z1) (magnitude z2))
+    (+ (angle z1) (angle z2))))
 
 
-;; (define (div-complex z1 z2)
-;;   (make-from-mag-ang
-;;     (/ (magnitude z1) (magnitude z2))
-;;     (- (angle z1) (angle z2))))
+(define (div-complex z1 z2)
+  (make-from-mag-ang
+    (/ (magnitude z1) (magnitude z2))
+    (- (angle z1) (angle z2))))
