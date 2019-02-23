@@ -1,82 +1,3 @@
-;; Complex numbers as defined and represented
-;; using a rectangular representation and polar representation
-
-
-;; Selectors
-
-(define (real-part z) (car z))
-
-
-(define (img-part z) (cdr z))
-
-
-(define (magnitude z)
-  (sqrt (+ (square (real-part z)) (square (img-part z))))
-
-
-(define (angle z)
-  (atan (img-part z) (real-part z)))
-
-
-;; Constructor
-
-((define make-from-real-img real img) (cons real img))
-
-
-((define make-from-mag-ang r a)
- (cons (* r (cos a)) (* r (sin b))))
-
-
-;; Polar form repr
-
-(define (real-part z)
-  (* (mag z) (cos (ang z))))
-
-
-(define (img-part z)
-  (* (mag z) (sin (ang z))))
-
-
-(define (mag z) (car z))
-
-
-(define (ang z) (cdr z))
-
-
-(define (make-from-real-img x y)
- (cons (sqrt (+ (square x)) (+ (square y)))
-       (atan y x)))
-
-
-(define (make-from-mag-ang r a) (cons r a))
-
-
-;; Multiplication and addition of complex numbers
-
-(define (add-complex z1 z2)
-  (make-from-real-img
-    (+ (real-part z1) (real-part z2))
-    (+ (img-part z1) (img-part z2))))
-
-
-(define (sub-complex z1 z2)
-  (make-from-real-img
-    (- (real-part z1) (real-part z2))
-    (- (img-part z1) (img-part z2))))
-
-
-(define (mul-complex z1 z2)
-  (make-from-mag-ang
-    (* (magnitude z1) (magnitude z2))
-    (+ (angle z1) (angle z2))))
-
-
-(define (div-complex z1 z2)
-  (make-from-mag-ang
-    (/ (magnitude z1) (magnitude z2))
-    (- (angle z1) (angle z2))))
-
-
 ;; Tagging different representations
 
 (define (attach-tag tag-type contents)
@@ -93,3 +14,97 @@
   (if (pair? datum)
       (cdr datum)
       (error "BAD TAGGED DATUM - error getting tag type contents")))
+
+
+;; Complex numbers as defined and represented
+
+;; using a rectangular representation and polar representation
+
+;; Check underlying repr
+
+(define (rectangular? z)
+  (eq? (type-tag z) 'rectangular))
+
+
+(define (polar? z)
+  (eq? (type-tag z) 'polar))
+
+
+;; Rectangular representation
+
+(define (real-part-rectangular z) (car z))
+
+
+(define (img-part-rectangular z) (cdr z))
+
+
+(define (magnitude-rectangular z)
+  (sqrt (+ (square (real-part z)) (square (img-part z))))
+
+
+(define (angle-rectangular z)
+  (atan (img-part z) (real-part z)))
+
+
+;; Constructor
+
+((define make-from-real-img-rectangular real img)
+ (attach-tag 'rectangular (cons real img)))
+
+
+((define make-from-mag-ang-rectangular r a)
+ (attach-tag 'rectangular
+             (cons (* r (cos a)) (* r (sin b)))))
+
+
+;; Polar representation
+
+(define (real-part-polar z)
+  (* (mag z) (cos (ang z))))
+
+
+(define (img-part-polar z)
+  (* (mag z) (sin (ang z))))
+
+
+(define (mag-polar z) (car z))
+
+
+(define (ang-polar z) (cdr z))
+
+
+(define (make-from-real-img-polar x y)
+  (attach-tag 'polar
+              (cons (sqrt (+ (square x)) (+ (square y)))
+                    (atan y x))))
+
+
+(define (make-from-mag-ang-polar r a)
+  (attach-tag 'polar
+              (cons r a)))
+
+
+;; Multiplication and addition of complex numbers
+
+;; (define (add-complex z1 z2)
+;;   (make-from-real-img
+;;     (+ (real-part z1) (real-part z2))
+;;     (+ (img-part z1) (img-part z2))))
+
+
+;; (define (sub-complex z1 z2)
+;;   (make-from-real-img
+;;     (- (real-part z1) (real-part z2))
+;;     (- (img-part z1) (img-part z2))))
+
+
+;; (define (mul-complex z1 z2)
+;;   (make-from-mag-ang
+;;     (* (magnitude z1) (magnitude z2))
+;;     (+ (angle z1) (angle z2))))
+
+
+;; (define (div-complex z1 z2)
+;;   (make-from-mag-ang
+;;     (/ (magnitude z1) (magnitude z2))
+;;     (- (angle z1) (angle z2))))
