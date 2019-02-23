@@ -34,7 +34,7 @@
 
 
 (define (img-part z)
-  (* (mag z) (sin (ang z)))) 
+  (* (mag z) (sin (ang z))))
 
 
 (define (mag z) (car z))
@@ -75,3 +75,21 @@
   (make-from-mag-ang
     (/ (magnitude z1) (magnitude z2))
     (- (angle z1) (angle z2))))
+
+
+;; Tagging different representations
+
+(define (attach-tag tag-type contents)
+  (cons tag-type contents))
+
+
+(define (type-tag datum)
+  (if (pair? datum)
+      (car datum)
+      (error "BAD TAGGED DATUM - error getting tag type")))
+
+
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "BAD TAGGED DATUM - error getting tag type contents")))
