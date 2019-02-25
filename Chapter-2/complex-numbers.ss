@@ -150,3 +150,21 @@
   (make-from-mag-ang
     (/ (magnitude z1) (magnitude z2))
     (- (angle z1) (angle z2))))
+
+
+;; Interface to the rest of the system in terms of
+;; data driven
+
+;; Rectangular representation
+
+(define (tag x) (attach-tag 'rectangular x))
+
+
+(put 'real-part '(rectangular) real-part)
+(put 'img-part '(rectangular) img-part)
+(put 'magnitude '(rectangular) magnitude)
+(put 'angle '(rectangular) angle)
+(put 'make-from-real-img 'rectangular
+     (lambda (x y) (tag (make-from-real-img-rectangular x y))))
+(put 'make-from-mag-ang 'rectangular
+     (lambda (r a) (tag (make-from-mag-ang-rectangular x y))))
