@@ -57,6 +57,14 @@
              (cons (* r (cos a)) (* r (sin b)))))
 
 
+(define (make-from-real-img x y)
+  (make-from-real-img-rectangular x y))
+
+
+(define (make-from-mag-ang r a)
+  (make-from-mag-ang-polar r a))
+
+
 ;; Polar representation
 
 (define (real-part-polar z)
