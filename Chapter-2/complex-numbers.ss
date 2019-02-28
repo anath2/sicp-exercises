@@ -159,7 +159,6 @@
 
 (define (tag x) (attach-tag 'rectangular x))
 
-
 (put 'real-part '(rectangular) real-part)
 (put 'img-part '(rectangular) img-part)
 (put 'magnitude '(rectangular) magnitude)
@@ -168,3 +167,17 @@
      (lambda (x y) (tag (make-from-real-img-rectangular x y))))
 (put 'make-from-mag-ang 'rectangular
      (lambda (r a) (tag (make-from-mag-ang-rectangular x y))))
+
+
+;; Polar representation
+
+(define (tag x) (attach-tag 'polar x))
+
+(put 'real-part '(polar) real-part)
+(put 'img-part '(polar) img-part)
+(put 'magnitude '(polar) magnitude)
+(put 'angle '(polar) angle)
+(put 'make-from-real-img 'polar
+     (lambda (x y) (tag (make-from-real-img-polar x y))))
+(put 'make-from-mag-ang 'polar
+     (lambda (r a) (tag (make-from-mag-ang-polar r a))))
