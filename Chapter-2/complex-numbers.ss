@@ -16,6 +16,12 @@
       (error "BAD TAGGED DATUM - error getting tag type contents")))
 
 
+;; Apply generic operation
+
+(define (apply-generic op . args)
+  ())
+
+
 ;; Complex numbers as defined and represented
 
 ;; using a rectangular representation and polar representation
