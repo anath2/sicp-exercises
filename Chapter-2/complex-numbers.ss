@@ -163,6 +163,19 @@
 
 ;; Rectangular representation
 
+(define (install-rectangular-package)
+  ;; Internal procedures
+  (define (real-part z) (car z))
+  (define (img-part z) (cdr z))
+  (define (make-from-real-img x y) (cons x y))
+  (define (magnitude z)
+    (sqrt (+ (square (real-part z))
+             (square (img-part z)))))
+  (define (angle z)
+    (atan (img-part z) (real-part z)))
+  (define (make-from-mag-ang r a )
+    (cons (* r (cos a)) (* r (sin a))))
+
 (define (tag x) (attach-tag 'rectangular x))
 
 (put 'real-part '(rectangular) real-part)
@@ -173,9 +186,23 @@
      (lambda (x y) (tag (make-from-real-img-rectangular x y))))
 (put 'make-from-mag-ang 'rectangular
      (lambda (r a) (tag (make-from-mag-ang-rectangular x y))))
+'done)
 
 
 ;; Polar representation
+'
+(define (install-polar-package)
+ ;; Internal procedures
+  (define (magnitude z) (car z))
+  (define (angle z) (cdr z))
+  (define (make-from-mag-ang r a) (cons r a))
+  (define (real-part z)
+    (* (magnitude z) (cos (angle z))))
+  (define (img-part z)
+    (* (magnitude z) (sin (angle z))))
+  (define (make-from-real-img x y)
+    (cons (sqrt (+ (square x) (square y)))
+          (atan (y x))))
 
 (define (tag x) (attach-tag 'polar x))
 
@@ -187,3 +214,4 @@
      (lambda (x y) (tag (make-from-real-img-polar x y))))
 (put 'make-from-mag-ang 'polar
      (lambda (r a) (tag (make-from-mag-ang-polar r a))))
+'done)

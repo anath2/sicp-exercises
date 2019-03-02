@@ -3,6 +3,14 @@
 ** Building abstractions with procedures
 
 ** Building abstractions with data
+*** Complex numbers
+There two possible ways to represent complex numbers. These include the
 
+1. Polar form
+2. Rectanglar form
 
-Expression (list (e1)
+The goal is to be able to create generic procedures that can operate on complex numbers
+irrespective of the underlying representation of data. One of the ways to achieve this
+is to attach a tag to each complex number indicating whether it represented in rectangular
+or polar form. Then based on the tag call the appropriate procedure for selectors and
+other arithematic operations
