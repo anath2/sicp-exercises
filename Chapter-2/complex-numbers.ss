@@ -215,3 +215,41 @@
 (put 'make-from-mag-ang 'polar
      (lambda (r a) (tag (make-from-mag-ang-polar r a))))
 'done)
+
+
+;; Apply-generic
+
+;; Apply generic procedure by looking up the definition of the
+;; operation from the table
+
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let proc ((get op type-tags)))
+    (if proc
+        (apply (map contents args))
+        (error "Procedure cannot be found"
+               (list op tag-types)))))
+
+
+;; Selectors based on new representations
+
+(define (real-part z) (apply-generic 'real-part z))
+
+
+(define (img-part z) (apply-generic 'img-part z))
+
+
+(define (magnitude z) (apply-generic 'magnitude z))
+
+
+(define (angle z) (apply-generic 'angle z))
+
+
+;; Constructors
+
+(define (make-from-real-img x y)
+  ((get 'make-from-real-img 'rectangular ) x y))
+
+
+(define (make-from-mag-ang r a)
+  ((get 'make-from-mag-ang 'polar) r a))
