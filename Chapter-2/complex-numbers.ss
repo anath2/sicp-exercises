@@ -253,3 +253,43 @@
 
 (define (make-from-mag-ang r a)
   ((get 'make-from-mag-ang 'polar) r a))
+
+
+;; Excercise 2.73
+
+(define (deriv exp var)
+  (cond ((number? exp) 0)
+        ((variable? exp) (if (same-variable? exp var) 1 0))
+        ((sum? exp)
+         (make-sum (deriv (addend exp) var)
+                   (deriv (augend exp) var)))
+        ((product? exp)
+         (make-sum
+          (make-product (multiplier exp)
+                        (deriv (multiplicand exp) var))
+          (make-product (multiplicand exp)
+                        (deriv (multiplier exp) var))))
+        ;; <more rules>
+
+        (else (error "Unknown expression  type -- DERIV" exp))))
+
+
+;; Data directed form
+;; Note, that the expression is represented by a pair with operator and operands
+
+(define (deriv exp var)
+  (cond ((number? exp) 0)
+        ((variable? exp) (if (same-variable? exp var) 1 0))
+        (else ((get 'deriv (operator exp)) (operands exp) var))))
+
+
+(define (operator exp) (car exp))
+
+
+(define (operands exp) (cdr exp))
+
+;; a. The operators are added to a table. When an operation has to be performed,
+;; the function is looked up using 'get statement and applied upon the variables with a given
+;; expression.
+;; number and variable methods here are not added to data directed dispatch because those are
+;; predicates and return values instead of function
