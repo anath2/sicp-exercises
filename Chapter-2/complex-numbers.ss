@@ -293,3 +293,7 @@
 ;; expression.
 ;; number and variable methods here are not added to data directed dispatch because those are
 ;; predicates and return values instead of function
+
+
+(define (install-deriv-package)
+  ())
