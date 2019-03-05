@@ -297,6 +297,8 @@
 
 (define (install-deriv-package)
   ;; Package functions
+
+  ;; Sum
   (define (make-sum a1 a2)
     (cond ((=number? a1 0) a2)
           ((=number? a2 0) a1)
@@ -305,4 +307,12 @@
   (define (addend e) (cadr e))
   (define (augend e) (accumulate make-sum 0 (cddr e)))
 
-  )
+  ;; Product
+  (define (make-product p1 p2)
+    (cond ((or (=number? p1 0) (=number? p2 0)) 0)
+          ((=number? p1 1) p2)
+          ((=number? p2 1) p2)
+          ((and (number? p1) (number? p2)) (* p1 p2))
+          (else (list '* p1 p2))))
+  (define (multiplier e) (cadr e))
+  (define (multiplicand e) (make-product 1 cddr e)))
