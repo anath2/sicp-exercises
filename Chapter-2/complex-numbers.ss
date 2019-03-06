@@ -295,8 +295,16 @@
 ;; predicates and return values instead of function
 
 
+(define (install-sum)
+  ())
+
+(define (install-product)
+  ())
+
+
 (define (install-deriv-package)
   ;; Package functions
+  ;; Note that predicates are assumed to defined elsewhere
 
   ;; Sum
   (define (make-sum a1 a2)
@@ -315,4 +323,9 @@
           ((and (number? p1) (number? p2)) (* p1 p2))
           (else (list '* p1 p2))))
   (define (multiplier e) (cadr e))
-  (define (multiplicand e) (make-product 1 cddr e)))
+  (define (multiplicand e) (make-product 1 cddr e))
+
+  ;; Populate table
+  (put '+ '(deriv) make-sum)
+  (put '* (deriv) make-product)
+  'done)
