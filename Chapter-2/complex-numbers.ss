@@ -277,6 +277,51 @@
 ;; Data directed form
 ;; Note, that the expression is represented by a pair with operator and operands
 
+
+;; a. The operators are added to a table. When an operation has to be performed,
+;; the function is looked up using 'get statement and applied upon the variables with a given
+;; expression.
+;; number and variable methods here are not added to data directed dispatch because those are
+;; predicates and return values instead of function
+
+(define (install-sum)
+  (define (make-sum a1 a2) (cons a1 a2))
+  (define (addend e) (cadr e))
+  (define (augend e) (caddr e))
+  (define (deriv-sum e)
+    (make-sum (deriv (addend e)) (deriv (augend e))))
+  (define (tag x) (attach-tag '+ x))
+
+  (put 'deriv '(+) deriv-sum)
+  (put 'make-sum '+ (lambda (a1 a2) (tag (make-sum a1 a2))))
+  'done)
+
+
+(define (make-sum a1 a2)
+  ((get 'make-sum '+ ) a1 a2))
+
+
+(define (install-product)
+  (define (make-product p1 p2) (cons p1 p2))
+  (define (multiplier e) (cadr e))
+  (define (multiplicand e) (caddr e))
+  (define (deriv-product p)
+    (make-sum
+     (make-product (multiplier p)
+                   (deriv (multiplicand p)))
+     (make-product (multiplicand p)
+                   (deriv (mulitplier p)))))
+
+  (define (tag x) (attach-tag '* x))
+  (put 'deriv '(*) deriv-product)
+  (put 'make-product '* (lambda (p1 p2) (tag (make-product p1 p2))))
+  'done)
+
+
+(define (make-product p1 p2)
+  ((get 'make-product '*) p1 p2))
+
+
 (define (deriv exp var)
   (cond ((number? exp) 0)
         ((variable? exp) (if (same-variable? exp var) 1 0))
@@ -287,45 +332,3 @@
 
 
 (define (operands exp) (cdr exp))
-
-;; a. The operators are added to a table. When an operation has to be performed,
-;; the function is looked up using 'get statement and applied upon the variables with a given
-;; expression.
-;; number and variable methods here are not added to data directed dispatch because those are
-;; predicates and return values instead of function
-
-
-(define (install-sum)
-  ())
-
-(define (install-product)
-  ())
-
-
-(define (install-deriv-package)
-  ;; Package functions
-  ;; Note that predicates are assumed to defined elsewhere
-
-  ;; Sum
-  (define (make-sum a1 a2)
-    (cond ((=number? a1 0) a2)
-          ((=number? a2 0) a1)
-          ((and (number? a1) (number? a2)) (+ a1 a2))
-          (else (list '+ a1 a2))))
-  (define (addend e) (cadr e))
-  (define (augend e) (accumulate make-sum 0 (cddr e)))
-
-  ;; Product
-  (define (make-product p1 p2)
-    (cond ((or (=number? p1 0) (=number? p2 0)) 0)
-          ((=number? p1 1) p2)
-          ((=number? p2 1) p2)
-          ((and (number? p1) (number? p2)) (* p1 p2))
-          (else (list '* p1 p2))))
-  (define (multiplier e) (cadr e))
-  (define (multiplicand e) (make-product 1 cddr e))
-
-  ;; Populate table
-  (put '+ '(deriv) make-sum)
-  (put '* (deriv) make-product)
-  'done)
