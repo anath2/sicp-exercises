@@ -322,6 +322,19 @@
   ((get 'make-product '*) p1 p2))
 
 
+(define (install-exponentiation)
+  (define (make-exponentiation base exp) (cons base exp))
+  (define (base e) (cadr e))
+  (define (exp e) (caddr e))
+  (define (deriv-exponentation e)
+    (make-product (exp e)
+                  (make-exponentiation base (- exp 1))))
+  (define (tag x) (attach-tag '^ x))
+  (put 'deriv '(^) deriv-exponentiation)
+  (put 'make-exponentiation '^ (lambda (base exp) (tag (make-exponentiation base exponent))))
+  'done)
+
+
 (define (deriv exp var)
   (cond ((number? exp) 0)
         ((variable? exp) (if (same-variable? exp var) 1 0))
