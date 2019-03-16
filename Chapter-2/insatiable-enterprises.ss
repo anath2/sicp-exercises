@@ -26,3 +26,15 @@
 
 (define (get-salary employee-record div-name)
   ((get 'get-salary '(div-name)) employee-record))
+
+;; c) find-employee-record
+;; Implement headquarter's find-employee record procedure given
+;; the following arguments :
+;; 1. Employee's name
+;; 2. List of all division files
+
+(define (find-employee-record employee-name div-flist)
+  (if (eq?
+
+
+       )))
