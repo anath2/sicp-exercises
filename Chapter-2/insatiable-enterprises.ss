@@ -4,21 +4,42 @@
 
 ;; a) Get record
 ;; Explain how individual division's files should be structured
-;;
-;; Each division has a single personnel file contains records
-;; keyed on employee names
-;; Each file is arranged differently by each invidividual division.
-;; Each record is a set keyed by fields such as address,
-;; salary etc
 
-;; Each division's retrieval methods should be tagged with name of the division
-;; Also, each record file should be pair with employee-name and division-name
+;; The dispatch table consists of division names as rows and corresponding
+;; retrieval procedures as columns
+
+;; Each division consists of a single file tagged by name of division
+;; Each employee record in the file are further tagged by the name
+;; of the employee
+
+;; COnsider the following example
+
+(define (install-division-1-package)
+  (define (get-record name file)
+    (cond ((null? file) (error "Record could not be found"))
+          ((eq? name (get-name (cadr file))) (cadr file))
+          (else (get-record name (cdr file)))))
+
+  (define (get-name record)
+    (car record))
+
+  (put 'division-1 get-record)
+  (put 'division-1 get-name)
+  'done)
+
+;; Generic procedures
+
+
 
 (define (get-record employee-name div-name)
   (if (null? employee-name)
       (error "Employe name has to be non null" employee-name)
       ;; Dispatch on employee-retrieval for the department
       ((get 'get-record '(div-name)) employee-name)))
+
+
+
+
 
 ;; b) get-salary
 ;; Each division's get salary method should be tagged with the name of the
