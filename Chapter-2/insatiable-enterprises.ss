@@ -29,6 +29,20 @@
 
 ;; Generic procedures
 
+(define (get-record name file)
+  (apply-generic 'get-record name file))
+
+
+(define (apply-generic op name file)
+  (let ((div-name (type-tag file)))
+    (let ((func (get op div-name)))
+      (if func
+          (func name file)
+          (error "Procedure not defined")))))
+
+
+(define (type-tag file)
+  (car file))
 
 
 (define (get-record employee-name div-name)
@@ -36,9 +50,6 @@
       (error "Employe name has to be non null" employee-name)
       ;; Dispatch on employee-retrieval for the department
       ((get 'get-record '(div-name)) employee-name)))
-
-
-
 
 
 ;; b) get-salary
