@@ -20,17 +20,27 @@
           ((eq? name (get-name (cadr file))) (cadr file))
           (else (get-record name (cdr file)))))
 
+  (define (get-salary name file)
+    (cond ((null? file) (error "no result"))
+          ((eq? name (get-name (cadr file))) (cadr (cadr file)))
+          (else (get-salary name (cdr file)))))
+
   (define (get-name record)
     (car record))
 
   (put 'division-1 get-record)
   (put 'division-1 get-name)
+  (put 'division-1 get-salary)
   'done)
 
 ;; Generic procedures
 
 (define (get-record name file)
   (apply-generic 'get-record name file))
+
+
+(define (get-salary name file)
+  (apply-generic 'get-salary name file)
 
 
 (define (apply-generic op name file)
