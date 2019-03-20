@@ -12,7 +12,7 @@
 ;; Each employee record in the file are further tagged by the name
 ;; of the employee
 
-;; COnsider the following example
+;; Consider the following example
 
 (define (install-division-1-package)
   (define (get-record name file)
@@ -69,6 +69,7 @@
 (define (get-salary employee-record div-name)
   ((get 'get-salary '(div-name)) employee-record))
 
+
 ;; c) find-employee-record
 ;; Implement headquarter's find-employee record procedure given
 ;; the following arguments :
@@ -76,7 +77,9 @@
 ;; 2. List of all division files
 
 (define (find-employee-record employee-name div-flist)
-  (if (eq?
-
-
-       )))
+  (if (null? div-flist)
+      'nil
+      (let ((curr-file (car div-flist)))
+        (if (get-record employee-name curr-file)
+            (get-record employee-name curr-file)
+            (find-employee-record employee-name (cdr div-flist))))))
