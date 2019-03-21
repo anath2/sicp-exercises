@@ -83,3 +83,9 @@
         (if (get-record employee-name curr-file)
             (get-record employee-name curr-file)
             (find-employee-record employee-name (cdr div-flist))))))
+
+
+;; d) If insatiable enterprises takes over a new company, the company records
+;; have to tagged by the previous name of the (new division). within each record
+;; employee records have to be tagged with the name of employee so that
+;; the records are searchable
