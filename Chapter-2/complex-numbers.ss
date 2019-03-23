@@ -263,7 +263,7 @@
           ((eq? op 'img-part) y)
           ((eq? op 'magnitude) (sqrt (+ (square x) (square y))))
           ((eq? op 'angle) (atan y x))
-          (else (error "Unknown operation on rectangular type"))))
+          (else (error "Unknown operation on rectangular representation"))))
   dispatch)
 
 
@@ -271,9 +271,14 @@
   (define (dispatch op)
     (cond ((eq? op 'magnitude) r)
           ((eq? op 'angle) a)
+          ((eq? op 'real-part) (* r (cos a)))
+          ((eq? op 'img-part) (* r (sin a)))
+          (else (error "Unknown operation on polar representation"))))
+  dispatch)
 
-          )
-    )
+
+(define (apply-generic op arg) (arg op))
+
 
 ;; Excercise 2.73
 
