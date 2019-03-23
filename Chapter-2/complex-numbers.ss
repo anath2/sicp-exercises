@@ -255,6 +255,26 @@
   ((get 'make-from-mag-ang 'polar) r a))
 
 
+;; Alternative representation using message passing
+
+(define (make-from-real-img x y)
+  (define (dispatch op)
+    (cond ((eq? op 'real-part) x)
+          ((eq? op 'img-part) y)
+          ((eq? op 'magnitude) (sqrt (+ (square x) (square y))))
+          ((eq? op 'angle) (atan y x))
+          (else (error "Unknown operation on rectangular type"))))
+  dispatch)
+
+
+(define (make-from-mag-ang r a)
+  (define (dispatch op)
+    (cond ((eq? op 'magnitude) r)
+          ((eq? op 'angle) a)
+
+          )
+    )
+
 ;; Excercise 2.73
 
 (define (deriv exp var)
