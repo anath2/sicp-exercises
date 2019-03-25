@@ -1,4 +1,13 @@
 Comparing message passing with data directed style and explicit dispatch for writing
-generic methods:
 
-TBD
+Q. Which among message passing, data directed programming and explicit dispatch on tag
+would be appropriate in a large system where type often changes
+
+Ans: explicit dispatch requires all function on datatypes to be names differently also,
+constructors of the datatypes have tags that are to be added. Hence all functions have to modified
+to ensure there is no conflict among when a new type is added. Adding new operations is simpler
+since they only have to be added for given types.
+
+Data directed programming makes it easier to add new types installed as packages. Adding additional
+operations on types is cumbersome as all packages have to be modified. Same is true in message
+passing style of objects
