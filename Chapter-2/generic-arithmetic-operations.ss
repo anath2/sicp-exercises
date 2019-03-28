@@ -1,5 +1,7 @@
 ;; Define generic arithematic operations on different types
 
+;; Generic scheme numbers
+
 (define (scheme-number-package)
 
   (define (tag x) (attach-tag 'scheme-number x))
@@ -16,3 +18,16 @@
 
 (define (make-scheme-number x)
   ((get 'make 'scheme-number) x))
+
+
+;; Rational numbers
+
+(define (install-rational-package)
+  ;; Internal procedures
+  (define (numer x) (car x))
+  (define (denom x) (cdr x))
+  (define (make-rat gcd n d)
+    (let (( g (gcd n d)))
+      (cons (/ n g) (/d g))))
+
+  'done)
