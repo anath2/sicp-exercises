@@ -29,5 +29,31 @@
   (define (make-rat gcd n d)
     (let (( g (gcd n d)))
       (cons (/ n g) (/d g))))
+  (define (add-rat x y)
+    (make-rat (+ (* (numer x) (denom y))
+                 (* (numer y) (denom x)))
+              (* (denom x) (denom y))))
+  (define (sub-rat x y)
+    (make-rat (- (* (numer x) (denom y))
+                 (* (numer y) (denom x)))
+              (* (denom x) (denom y))))
+  (define (mul-rat x y)
+    (make-rat (* (numer x) (numer y))
+              (* (denom x) (denom y))))
+  (define (div-rat x y)
+    (make-rat (* (numer x) (denom y))
+              (* (numer y) (denom x))))
+
+  ;; Interface to the rest of the system
+  (define (tag x) (attach-tag 'rational x))
+  (put 'add '(rational rational) (lambda (x y) (add-rat x y)))
+  (put 'sub '(rational rational) (lambda (x y) (sub-rat x y)))
+  (put 'mul '(rational rational) (lambda (x y) (mul-rat x y)))
+  (put 'div '(rational rational) (lambda (x y) (div-rat x y)))
+  (put 'make 'rational (lambda (n d) (tag (make-rational n d))))
 
   'done)
+
+
+(define (make-rational n d)
+  ((get 'make 'rational) n d))
