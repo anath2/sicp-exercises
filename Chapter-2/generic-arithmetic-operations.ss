@@ -161,3 +161,92 @@
 (define (sub x y) (apply-generic 'sub x y))
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
+
+
+;; -----------------------------------------------------------------
+
+
+;; Exercises
+
+;; 2.77
+
+(define (install-complex-package)
+  ;; import procedures from complex.ss
+
+  (define (make-from-real-img x y)
+    ((get 'make-from-real-img 'rectangular) x y))
+
+  (define (make-from-mag-ang r a)
+    ((get 'make-from-mag-ang 'polar) r a))
+
+
+  ;; Internal procedures
+
+  (define (add-complex z1 z2)
+    (make-from-real-img (+ (real-part z1)
+                           (real-part z2))
+                        (+ (imag-part  z1)
+                           (imag-part  z2))))
+
+  (define (sub-complex x y)
+    (make-from-real-img (- (real-part z1)
+                           (real-part z2))
+                        (- (imag-part  z1)
+                           (imag-part  z2))))
+
+  (define (mul-complex z1 z2)
+    (make-from-mag-ang (* (magnitude z1)
+                          (magnitude z2))
+                       (* (angle z1)
+                          (angle z2))))
+
+  (define (div-complex z1 z2)
+    (make-from-mag-ang (/ (magnitude z1)
+                          (magnitude z2))
+                       (/ (angle z1)
+                          (angle z2))))
+
+  ;; Iterface to the rest of the system
+
+  (define (tag z) (attach-tag 'complex z))
+
+  (put 'add '(complex complex)
+       (lambda (x y) (tag (add-complex x y))))
+
+  (put 'sub '(complex complex)
+       (lambda (x y) (tag (sub-complex x y))))
+
+  (put 'mul '(complex complex)
+       (lambda (x y) (tag (mul-complex x y))))
+
+  (put 'div '(complex complex)
+       (lambda (x y) (tag (div-complex x y))))
+
+  (put 'make-from-real-img 'complex
+       (lambda (x y) (tag (make-from-real-img x y))))
+
+  (put 'make-from-mag-ang 'complex
+       (lambda (r a) (tag (make-from-mag-ang r a))))
+
+  ;; New selectors
+
+  (put 'real-part '(complex) real-part)
+  (put 'imag-part '(complex) imag-part)
+  (put 'magnitude '(complex) magnitude)
+  (put 'angle '(complex) angle)
+
+  'done)
+
+
+;; this works by calling the generic selectors defined on the
+;; complex datatype
+
+;; Consider the complex number: 3 + 4i
+;; (apply-generic 'real-part '(complex) ('complex (rectangular' 3 4))) ->
+;; (real-part ('rect 3 4)) ->
+;; (apply-generic 'real-part '(rectangular) ('rect 3 4)) ->
+;; ((get 'real-part '(rect) ) (3 4))
+;; 3
+;; Apply generi is called 2 times
+;; real part generic selector is called once followed by
+;; real part of rectangular package
