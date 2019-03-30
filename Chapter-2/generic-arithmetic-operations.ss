@@ -46,10 +46,10 @@
 
   ;; Interface to the rest of the system
   (define (tag x) (attach-tag 'rational x))
-  (put 'add '(rational rational) (lambda (x y) (add-rat x y)))
-  (put 'sub '(rational rational) (lambda (x y) (sub-rat x y)))
-  (put 'mul '(rational rational) (lambda (x y) (mul-rat x y)))
-  (put 'div '(rational rational) (lambda (x y) (div-rat x y)))
+  (put 'add '(rational rational) (tag (lambda (x y) (add-rat x y))))
+  (put 'sub '(rational rational) (tag (lambda (x y) (sub-rat x y))))
+  (put 'mul '(rational rational) (tag (lambda (x y) (mul-rat x y))))
+  (put 'div '(rational rational) (tag (lambda (x y) (div-rat x y))))
   (put 'make 'rational (lambda (n d) (tag (make-rational n d))))
 
   'done)
@@ -57,3 +57,107 @@
 
 (define (make-rational n d)
   ((get 'make 'rational) n d))
+
+
+;; Complex numbers
+;; This package uses some of the procedures defined in complex.ss
+;; Additivity permits us to include already defined packages in
+;; our definitions
+
+
+(define (install-complex-package)
+  ;; import procedures from complex.ss
+
+  (define (make-from-real-img x y)
+    ((get 'make-from-real-img 'rectangular) x y))
+
+  (define (make-from-mag-ang r a)
+    ((get 'make-from-mag-ang 'polar) r a))
+
+
+  ;; Internal procedures
+
+  (define (add-complex z1 z2)
+    (make-from-real-img (+ (real-part z1)
+                           (real-part z2))
+                        (+ (img-part  z1)
+                           (img-part  z2))))
+
+  (define (sub-complex x y)
+    (make-from-real-img (- (real-part z1)
+                           (real-part z2))
+                        (- (img-part  z1)
+                           (img-part  z2))))
+
+  (define (mul-complex z1 z2)
+    (make-from-mag-ang (* (magnitude z1)
+                          (magnitude z2))
+                       (* (angle z1)
+                          (angle z2))))
+
+  (define (div-complex z1 z2)
+    (make-from-mag-ang (/ (magnitude z1)
+                          (magnitude z2))
+                       (/ (angle z1)
+                          (angle z2))))
+
+  ;; Iterface to the rest of the system
+
+  (define (tag z) (attach-tag 'complex z))
+
+  (put 'add '(complex complex)
+       (lambda (x y) (tag (add-complex x y))))
+
+  (put 'sub '(complex complex)
+       (lambda (x y) (tag (sub-complex x y))))
+
+  (put 'mul '(complex complex)
+       (lambda (x y) (tag (mul-complex x y))))
+
+  (put 'div '(complex complex)
+       (lambda (x y) (tag (div-complex x y))))
+
+  (put 'make-from-real-img 'complex
+       (lambda (x y) (tag (make-from-real-img x y))))
+
+  (put 'make-from-mag-ang 'complex
+       (lambda (r a) (tag (make-from-mag-ang r a))))
+
+  'done)
+
+
+(define (make-from-real-img x y)
+  ((get 'make-from-real-img 'complex) x y))
+
+
+(define (make-from-mag-ang r a)
+  ((get 'make-from-mag-ang 'complex) r a))
+
+
+;; Generic procedures
+
+(define (type-tag datum)
+  (if (pair? datum)
+      (car datum)
+      (error "Bad tagged datum -- TYPE-TAG" datum)))
+
+
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "Bad tagged datum -- CONTENTS" datum)))
+
+
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (error "No methods for these types -- APPLY-GENERIC"
+                 (list op type-tags))))))
+
+
+(define (add x y) (apply-generic 'add x y))
+(define (sub x y) (apply-generic 'sub x y))
+(define (mul x y) (apply-generic 'mul x y))
+(define (div x y) (apply-generic 'div x y))
