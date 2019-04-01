@@ -136,6 +136,10 @@
 
 ;; Generic procedures
 
+(define (attach-tag type-tags content)
+  (cons type-tags content))
+
+
 (define (type-tag datum)
   (if (pair? datum)
       (car datum)
@@ -250,3 +254,28 @@
 ;; Apply generi is called 2 times
 ;; real part generic selector is called once followed by
 ;; real part of rectangular package
+
+
+;; 2.78
+
+;; Modify type-tag, contents and attach tag to use internal
+;; scheme representation for numbers
+
+
+(define (attach-tag type-tag content)
+  (if (number? content)
+      content
+      (cons type-tag content)))
+
+
+(define (type-tag datum)
+  (if ((pair? datum)
+      (car datum)
+
+      (error "Bad tagged datum -- TYPE-TAG" datum)))
+
+
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "Bad tagged datum -- CONTENTS" datum)))
