@@ -269,13 +269,12 @@
 
 
 (define (type-tag datum)
-  (if ((pair? datum)
-      (car datum)
-
-      (error "Bad tagged datum -- TYPE-TAG" datum)))
+  (cond ((pair? datum) (car datum))
+        ((number? datum) datum)
+        (else ("Bad tagged datum -- TYPE-TAG" datum))))
 
 
 (define (contents datum)
-  (if (pair? datum)
-      (cdr datum)
-      (error "Bad tagged datum -- CONTENTS" datum)))
+  (cond ((pair? datum) (cdr datum))
+        ((number? datum) datum)
+        (else ("Bad tagged datum -- CONTENTS" datum))))
