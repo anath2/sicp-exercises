@@ -6,6 +6,7 @@
 
   (define (tag x) (attach-tag 'scheme-number x))
   (put 'add '(scheme-number scheme-number) (lambda (x y) (+ x y)))
+  (put 'equ '(scheme-number scheme-number) (lambda (x y) (equal? x y)))
   (put 'sub '(scheme-number scheme-number) (lambda (x y) (- x y)))
   (put 'mul '(scheme-number scheme-number) (lambda (x y) (* x y)))
   (put 'div '(scheme-number scheme-number) (lambda (x y) (/ x y)))
@@ -43,6 +44,10 @@
   (define (div-rat x y)
     (make-rat (* (numer x) (denom y))
               (* (numer y) (denom x))))
+  (define (equ-rat x y)
+    (and (equals (numer x) (numer y))
+         (equals (denom x) (denom y))))
+
 
   ;; Interface to the rest of the system
   (define (tag x) (attach-tag 'rational x))
@@ -50,6 +55,8 @@
   (put 'sub '(rational rational) (tag (lambda (x y) (sub-rat x y))))
   (put 'mul '(rational rational) (tag (lambda (x y) (mul-rat x y))))
   (put 'div '(rational rational) (tag (lambda (x y) (div-rat x y))))
+  (put 'equ '(rational rational) (tag (lambda (x y) (equ-rat (contents x)
+                                                             (contents y)))))
   (put 'make 'rational (lambda (n d) (tag (make-rational n d))))
 
   'done)
@@ -83,11 +90,19 @@
                         (+ (img-part  z1)
                            (img-part  z2))))
 
-  (define (sub-complex x y)
+  (define (sub-complex z1 z2)
     (make-from-real-img (- (real-part z1)
                            (real-part z2))
                         (- (img-part  z1)
                            (img-part  z2))))
+
+  (define (equ-complex z1 z2)
+    (and
+     (equal? (real-part z1)
+             (real-part z2))
+     (equal? (img-part z1)
+             (img-part z2))))
+
 
   (define (mul-complex z1 z2)
     (make-from-mag-ang (* (magnitude z1)
@@ -110,6 +125,10 @@
 
   (put 'sub '(complex complex)
        (lambda (x y) (tag (sub-complex x y))))
+
+  (put 'equ '(complex complex)
+       (lambda (x y) (equ-complex (contents x)
+                                  (contents y))))
 
   (put 'mul '(complex complex)
        (lambda (x y) (tag (mul-complex x y))))
@@ -278,3 +297,13 @@
   (cond ((pair? datum) (cdr datum))
         ((number? datum) datum)
         (else ("Bad tagged datum -- CONTENTS" datum))))
+
+
+;; 2.79
+
+;; Adds equ to all packageso
+
+
+;; 2.80
+
+;; Adds =zero? to all packages
