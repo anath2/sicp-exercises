@@ -6,10 +6,11 @@
 
   (define (tag x) (attach-tag 'scheme-number x))
   (put 'add '(scheme-number scheme-number) (lambda (x y) (+ x y)))
-  (put 'equ '(scheme-number scheme-number) (lambda (x y) (equal? x y)))
+  (put 'equ '(scheme-number scheme-number) (lambda (x y) (eq? x y)))
   (put 'sub '(scheme-number scheme-number) (lambda (x y) (- x y)))
   (put 'mul '(scheme-number scheme-number) (lambda (x y) (* x y)))
   (put 'div '(scheme-number scheme-number) (lambda (x y) (/ x y)))
+  (put '=zero? '(scheme-number) (lambda (x) (eq? x 0)))
   (put 'make 'scheme-number (lambda (x) (tag x)))
 
   'done)
@@ -48,6 +49,7 @@
     (and (equals (numer x) (numer y))
          (equals (denom x) (denom y))))
 
+  (define (=zero? x) (eq? (numer x) 0))
 
   ;; Interface to the rest of the system
   (define (tag x) (attach-tag 'rational x))
@@ -55,8 +57,8 @@
   (put 'sub '(rational rational) (tag (lambda (x y) (sub-rat x y))))
   (put 'mul '(rational rational) (tag (lambda (x y) (mul-rat x y))))
   (put 'div '(rational rational) (tag (lambda (x y) (div-rat x y))))
-  (put 'equ '(rational rational) (tag (lambda (x y) (equ-rat (contents x)
-                                                             (contents y)))))
+  (put 'equ '(rational rational) equ-rat)
+  (put '=zero? 'rational =zero?)
   (put 'make 'rational (lambda (n d) (tag (make-rational n d))))
 
   'done)
@@ -98,11 +100,15 @@
 
   (define (equ-complex z1 z2)
     (and
-     (equal? (real-part z1)
+     (eq? (real-part z1)
              (real-part z2))
-     (equal? (img-part z1)
+     (eq? (img-part z1)
              (img-part z2))))
 
+  (define (=zer0? z)
+    (and
+     (eq? (real-part z) 0)
+     (eq? (img-part z) 0)))
 
   (define (mul-complex z1 z2)
     (make-from-mag-ang (* (magnitude z1)
@@ -126,9 +132,9 @@
   (put 'sub '(complex complex)
        (lambda (x y) (tag (sub-complex x y))))
 
-  (put 'equ '(complex complex)
-       (lambda (x y) (equ-complex (contents x)
-                                  (contents y))))
+  (put 'equ '(complex complex) equ-complex)
+
+  (put '=zero? '(complex) =zero?)
 
   (put 'mul '(complex complex)
        (lambda (x y) (tag (mul-complex x y))))
@@ -141,6 +147,7 @@
 
   (put 'make-from-mag-ang 'complex
        (lambda (r a) (tag (make-from-mag-ang r a))))
+
 
   'done)
 
@@ -301,7 +308,7 @@
 
 ;; 2.79
 
-;; Adds equ to all packageso
+;; Adds equ to all packages
 
 
 ;; 2.80
